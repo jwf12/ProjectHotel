@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<div class="container">
+    {% for room in rooms %}
+        <p>{{room.name}}</p>
+        {% if room.status == 1 %}
+        <p>{{room.name}}: Clean</p>
+        {% endif %}
+    {% endfor %}
+</div>
+
+
+{% endblock content %}

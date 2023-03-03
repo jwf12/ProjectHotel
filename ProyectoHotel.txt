@@ -1,0 +1,68 @@
+Modelos:
+
+User
+
+Passanger:
+-name.
+-dni.
+-tel.
+-email.
+-birth_date.
+-observations.
+
+Room:
+-Fk_Passanger.
+-max_capacity.
+-name/num.
+-type_room
+-state (free, occupied)
+-status(clean=green, dirty=yellow, red=blocked)
+
+Reservation:
+-Fk_Passanger
+-Fk_Room
+-date_in.
+-date_out.
+-number.
+-amount_people.
+-status(reserved, check in, check out)
+-observations.
+
+
+<--------->
+
+
+Funcionalidades:
+
+NavBar:
+-User.
+-logout
+-Make_a_reservation.
+-Rooms.
+-Search.
+
+Main screen:
+-shows rooms and it's status(if in check in shows some info(names, reservation dates, quantity of persons in room))
+	-If clicked you can do a reservation.
+	-Shows the status as color.
+
+Make_a_reservation:
+-a calendar with types of rooms and how many are available per day.
+-date.
+-rva_number.
+-amount_people.
+-data(Passanger/s).
+-type_room.
+-asigned_room.
+-observations.
+	make reservation<button>
+	
+Rooms:
+-status.
+-modify status.
+
+Search:
+-Passangers.
+-Reservations(by reserved, by check in, by check out / by date, by passanger, by room, by reserv number).
+
+

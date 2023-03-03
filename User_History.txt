@@ -1,0 +1,34 @@
+1*:Que muestre el formulario del pax con boton de editar.(modal)
+
+
+Base.Html: 
+    -Nav bar:
+        a href:
+        -log out
+        -user.is_authenticated
+        Con icono:
+        -Search
+        -Home
+        -Reservation
+        -Rooms
+    -block content.
+    -Bosstrap.
+    -SweetAlert.
+
+
+
+MainView:
+    -Cards(para representar las habs):
+    div container
+    div card
+    for room in rooms.
+        div bg-{{room.status}}.
+        -status:{{room.state}}
+        -room:{{room.name}}
+        -type:{{room.type}}
+        div.
+        if passanger:
+            for passanger
+               1*ahref{{passanger.name}}
+
+
