@@ -23,7 +23,7 @@ class Room(models.Model):
         ('#e74a3b', 'blocked',)  # blocked 
     )
 
-    passanger = models.ForeignKey(Passanger, on_delete=models.CASCADE)
+    passanger = models.CharField(max_length=205, null=True)
     max_capacity = models.CharField(max_length=205)
     name = models.CharField(max_length=205)
     type_room = models.CharField(max_length=205)

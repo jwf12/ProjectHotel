@@ -8,7 +8,7 @@
 <div class="row m-4 ">
     <div class="col d-flex justify-content-center flex-wrap">
         {% for room in rooms %}
-        <div class="card col-3 m-3" style="width: 18rem; background-color: {{ room.status }};">
+        <div class="card col-3 m-3" style="width: 18rem; background-color: {{ room.status}};">
             <div class="card-body">
                 <div class="card-top d-flex border-bottom">
                     <p class="card-state ">
@@ -25,12 +25,11 @@
                     <p class='room-type ml-4'> Type: {{room.type_room}} </p>
                     
                 </div>
-                
-                    <div class="passanger-room">
-       
-                    </div>
+                <div class="passanger-room">
+                    <p class="card-text">{{room.passanger}}</p>                 
+                    
 
-
+                </div>
                 <div class="fecha m-3">
                     <p class=''>Inicio: </p>
                     <p>Limite: </p>
