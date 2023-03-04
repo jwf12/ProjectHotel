@@ -32,15 +32,15 @@ class ReservationAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'passanger',
-        'Room',
+        'room',
         'date_in',
         'date_out',
         'number',
         'amount_people',
-        'status',
+        'status_res',
         'observations',
     )
-    list_filter = ('passanger', 'Room', 'date_in', 'date_out')
+    list_filter = ('passanger', 'room', 'date_in', 'date_out')
 
 
 admin.site.register(Passanger, PassangerAdmin)

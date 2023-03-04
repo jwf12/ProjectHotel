@@ -18,16 +18,17 @@ class Room(models.Model):
         (2, 'occupied'),
         )   
     STATUS_COLOR=(
-        (1, 'success'), # clean
-        (2, 'warning'), # dirty
-        (3, 'danger',)  # blocked
+        ('#9bf0ac', 'clean'), # clean 
+        ('#fffb8f', 'dirty'), # dirty 
+        ('#e74a3b', 'blocked',)  # blocked 
     )
 
+    passanger = models.ForeignKey(Passanger, on_delete=models.CASCADE)
     max_capacity = models.CharField(max_length=205)
     name = models.CharField(max_length=205)
     type_room = models.CharField(max_length=205)
     state = models.IntegerField(choices=STATE_STATE, default=1)
-    status = models.IntegerField(choices=STATUS_COLOR, default=1)
+    status = models.CharField(max_length=7, choices=STATUS_COLOR, default='#9bf0ac')
 
     def __str__(self):
         return self.name
@@ -40,12 +41,12 @@ class Reservation(models.Model):
         )
     
     passanger = models.ForeignKey(Passanger, on_delete=models.CASCADE)
-    Room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
     date_in = models.DateField()
     date_out = models.DateField()
     number = models.CharField(max_length=20)
     amount_people = models.IntegerField()
-    status = status = models.IntegerField(choices=STATUS_RESERVATION)
+    status_res = models.IntegerField(choices=STATUS_RESERVATION)
     observations = models.TextField()
 
 
