@@ -22,8 +22,12 @@ class Room(models.Model):
         ('#fffb8f', 'dirty'), # dirty 
         ('#e74a3b', 'blocked',)  # blocked 
     )
+    PASSANGER_STATUS=(
+        (1, 'disp'),
+        (2,'no-disp'),
+    )
 
-    passanger = models.CharField(max_length=205, null=True)
+    passanger = models.CharField(max_length=205, null=True, blank=True)
     max_capacity = models.CharField(max_length=205)
     name = models.CharField(max_length=205)
     type_room = models.CharField(max_length=205)

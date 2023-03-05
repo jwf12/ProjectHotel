@@ -25,8 +25,15 @@
                     <p class='room-type ml-4'> Type: {{room.type_room}} </p>
                     
                 </div>
+
                 <div class="passanger-room">
-                    <p class="card-text">{{room.passanger}}</p>                 
+                    
+                    {% for reservation in reservations %}
+                        {% if reservation.room.name == room.name %}
+                            <p>{{reservation.passanger}}</p>
+                            <p>{{reservation.passanger.email}}</p>
+                        {% endif %}                    
+                    {% endfor %}
                     
 
                 </div>

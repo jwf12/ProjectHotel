@@ -7,17 +7,21 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Passanger, Room, Reservation
+from utils.utils import room_change_satate
 
 #  Random id reservation: numbershortuuid.ShortUUID().random(length=6) 
 
 class Home(generic.ListView):
-    model = Room
+    queryset = Room.objects.all().order_by('id')
     template_name = 'index.html'
     context_object_name = 'rooms'
     
-    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-
+        context['reservations'] = Reservation.objects.filter(status_res=2) 
+        room_change_satate()   
+        return context
 
 
 # Login / register.
