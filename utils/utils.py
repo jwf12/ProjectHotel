@@ -3,12 +3,16 @@ from hotel.models import Reservation, Room
 # Funcion para cambiar el estado del room en caso que se le de check in a la reserva.
 
 def room_change_satate():
-    reserved_rooms = Reservation.objects.filter(status_res=2).values_list('room__id', flat=True)
-    free_rooms = Room.objects.exclude(id__in=reserved_rooms)
-    free_rooms.update(state=1)
+    reserved_rooms = set(Reservation.objects.filter(status_res=2).values_list('room__id', flat=True))
+    all_rooms = Room.objects.all()
+    
+    for room in all_rooms:
+        if room.id in reserved_rooms:
+            room.state = 2
+        else:
+            room.state = 1
+        room.save()
+    
     return None
 
-# Funcion para cambiar el estado del room cuando los pax salen de la habitacion. 
-# def room_change_state_passanger():
-#     context = Room.objects.filter(passanger=)
 
