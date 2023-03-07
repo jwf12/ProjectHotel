@@ -20,11 +20,7 @@ class Room(models.Model):
     STATUS_COLOR=(
         ('#9bf0ac', 'clean'), # clean 
         ('#fffb8f', 'dirty'), # dirty 
-        ('#e74a3b', 'blocked',)  # blocked 
-    )
-    PASSANGER_STATUS=(
-        (1, 'disp'),
-        (2,'no-disp'),
+        ('#D47777', 'blocked',)  # blocked 
     )
 
     passanger = models.CharField(max_length=205, null=True, blank=True)

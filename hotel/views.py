@@ -8,6 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Passanger, Room, Reservation
 from utils.utils import room_change_satate
+from django.shortcuts import get_object_or_404
 
 #  Random id reservation: numbershortuuid.ShortUUID().random(length=6) 
 
@@ -22,6 +23,17 @@ class Home(generic.ListView):
         context['reservations'] = Reservation.objects.filter(status_res=2) 
         room_change_satate()   
         return context
+
+
+
+
+# modales.
+class ShowPassData(generic.DetailView):
+    model = Passanger
+    template_name = 'passanger.html'
+    context_object_name = 'passan'
+    
+
 
 
 # Login / register.

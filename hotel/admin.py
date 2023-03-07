@@ -19,8 +19,8 @@ class PassangerAdmin(admin.ModelAdmin):
 class RoomAdmin(admin.ModelAdmin):
     list_display = (
         'id',
-        'max_capacity',
         'name',
+        'max_capacity',
         'type_room',
         'state',
         'status',
