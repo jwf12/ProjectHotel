@@ -4,18 +4,82 @@
 
 
 
-
-{{passan.name}}
-
-
-
-
-                <div class="modal-body">
-                    <p>{{passan.name}}</p>
-                    <p>{{passan.email}}</p>
+<div class="container text-center d-flex justify-content-center">
+    <div class="row">
+        <div class="col">
+    
+            <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                  ProjectHotel
                 </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><p>{{passan.name}}</p></li>
+                  <li class="list-group-item"><p>{{passan.dni}}</p></li>
+                  <li class="list-group-item">{{passan.tel}}</li>
+                  <li class="list-group-item">{{passan.email}}</li>
+                  <li class="list-group-item">{{passan.birth_date}}</li>
+                </ul>
+                <div class="container mt-5">
+                
+                <form action="" method='POST'>
+                    {% csrf_token %}
+                    <button type='button' class='btn btn-primary mx-4' data-bs-toggle="modal" data-bs-target="#updateModal_{{passan.id}}">Editar</button>
+                </form>
+
+                <button type="submit" class="btn btn-primary my-3">Ver Reserva</button>
+            </div>
+            </div>
+            
+            
+         
+        </div>
+    </div>
+</div>
 
 
+<!-- Modal: editar tarea-->
+
+ 
+<div class="modal fade" id="updateModal_{{passan.id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{tarea.id}}" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="bi bi-journal-bookmark"></i> Editar Tarea:</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+    
+        <form action="{% url 'hotel:update' passan.id %}" method = 'POST'>
+            {% csrf_token %}
+            <div class="modal-body">
+                
+                <div class="form-group m-3">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder={{passan.name}}>
+                </div>
+                <div class="form-group m-3">
+                    <label for="dni">Dni:</label>
+                    <input type="text" class="form-control" id="dni" name="dni" placeholder={{passan.dni}}>
+                </div>
+                <div class="form-group m-3">
+                    <label for="email">Email:</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder={{passan.email}}>
+                </div>
+                    
+            </div>
+
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+
+        </form>
+
+        
+      </div>
+    </div>
+</div>
 
 
 {% endblock content %}

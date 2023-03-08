@@ -14,5 +14,3 @@ def room_change_satate():
         room.save()
     
     return None
-
-

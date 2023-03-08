@@ -19,22 +19,32 @@ class Home(generic.ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         context['reservations'] = Reservation.objects.filter(status_res=2) 
         room_change_satate()   
         return context
 
 
-
-
-# modales.
 class ShowPassData(generic.DetailView):
     model = Passanger
     template_name = 'passanger.html'
     context_object_name = 'passan'
+
+
+class PassangerEditarView(generic.UpdateView):
+    model = Passanger
+    success_url = reverse_lazy('hotel:home')
+    fields = [
+        'name',
+        'dni',
+        'email',
+
+    ]
+
+    def form_valid(self, form):
+        return super().form_valid(form)
     
-
-
+    def form_invalid(self,form):
+        return super().form_invalid(form)
 
 # Login / register.
 class CustomLoginView(LoginView):
