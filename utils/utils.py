@@ -1,4 +1,6 @@
 from hotel.models import Reservation, Room
+from django.shortcuts import render
+from django.urls import reverse, reverse_lazy
 
 # Funcion para cambiar el estado del room en caso que se le de check in a la reserva.
 
@@ -14,3 +16,11 @@ def room_change_satate():
         room.save()
     
     return None
+
+
+def room_checkout(request, pk):
+    reservation = Reservation.objects.filter(pk=pk)
+    reservation.state = 3
+    success_url = reverse_lazy('hotel:home')
+
+    return render(request, 'index.html', context={'reservation': 'reservation',})

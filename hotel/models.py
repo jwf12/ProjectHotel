@@ -5,9 +5,12 @@ class Passanger(models.Model):
     name = models.CharField(max_length=205)
     dni = models.CharField(max_length=205)
     tel = models.CharField(max_length=205)
-    email = models.EmailField()
+    country = models.CharField(max_length=205, null=True, blank=True)
+    city  = models.CharField(max_length=205, null=True, blank=True)
+    adress  = models.CharField(max_length=205, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
     birth_date = models.DateField()
-    observations = models.TextField()
+    observations = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -23,7 +26,7 @@ class Room(models.Model):
         ('#D47777', 'blocked',)  # blocked 
     )
 
-    passanger = models.CharField(max_length=205, null=True, blank=True)
+    
     max_capacity = models.CharField(max_length=205)
     name = models.CharField(max_length=205)
     type_room = models.CharField(max_length=205)

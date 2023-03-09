@@ -12,21 +12,61 @@
                 <div class="card-header">
                   ProjectHotel
                 </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item"><p>{{passan.name}}</p></li>
-                  <li class="list-group-item"><p>{{passan.dni}}</p></li>
-                  <li class="list-group-item">{{passan.tel}}</li>
-                  <li class="list-group-item">{{passan.email}}</li>
-                  <li class="list-group-item">{{passan.birth_date}}</li>
-                </ul>
-                <div class="container mt-5">
+                <table>
+                  <tr>
+                    <td colspan="2"><h5 class="text-center my-2">Passenger information</h5></td>
+                  </tr>
+                  <tr>
+                    <td>Name:</td>
+                    <td>{{passan.passanger.name}}</td>
+                  </tr>
+                  <tr>
+                    <td>Dni:</td>
+                    <td>{{passan.passanger.dni}}</td>
+                  </tr>
+                  <tr>
+                    <td>Tel:</td>
+                    <td>{{passan.passanger.tel}}</td>
+                  </tr>
+                  <tr>
+                    <td>Email:</td>
+                    <td>{{passan.passanger.email}}</td>
+                  </tr>
+                  <tr>
+                    <td>Country:</td>
+                    <td>{{passan.passanger.country}}</td>
+                  </tr>
+                  <tr>
+                    <td>City:</td>
+                    <td>{{passan.passanger.city}}</td>
+                  </tr>
+                  <tr>
+                    <td>Address:</td>
+                    <td>{{passan.passanger.address}}</td>
+                  </tr>
+                  <tr>
+                    <td>Birth date:</td>
+                    <td>{{passan.passanger.birth_date}}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><h5 class='my-2 border-bottom'>Observations:</h5></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2 ">{{passan.passanger.observations}}</td>
+                  </tr>
+                </table>
+
+
+
+
+                <div class="container my-3 border-top">
                 
                 <form action="" method='POST'>
                     {% csrf_token %}
-                    <button type='button' class='btn btn-primary mx-4' data-bs-toggle="modal" data-bs-target="#updateModal_{{passan.id}}">Editar</button>
+                    <button type='button' class='btn btn-primary mx-4 my-4 ' data-bs-toggle="modal" data-bs-target="#updateModal_{{passan.id}}">Editar</button>
                 </form>
-
-                <button type="submit" class="btn btn-primary my-3">Ver Reserva</button>
+                <a href="{% url 'hotel:export_pdf' pk=passan.id %}" target="_blank">Abrir PDF</a>
+                {% comment %} <button type="submit" class="btn btn-primary my-3">Ver Reserva</button> {% endcomment %}
             </div>
             </div>
             
@@ -44,7 +84,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="bi bi-journal-bookmark"></i> Editar Tarea:</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="bi bi-journal-bookmark"></i> Edit Info:</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         
@@ -55,15 +95,47 @@
                 
                 <div class="form-group m-3">
                     <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder={{passan.name}}>
+                    <input type="text" class="form-control" id="name" name="name" value={{passan.passanger.name}} required>
                 </div>
+
                 <div class="form-group m-3">
                     <label for="dni">Dni:</label>
-                    <input type="text" class="form-control" id="dni" name="dni" placeholder={{passan.dni}}>
+                    <input type="text" class="form-control" id="dni" name="dni" value={{passan.passanger.dni}} required>
                 </div>
+
                 <div class="form-group m-3">
-                    <label for="email">Email:</label>
-                    <input type="text" class="form-control" id="email" name="email" placeholder={{passan.email}}>
+                    <label for="tel">Tel:</label>
+                    <input type="text" class="form-control" id="tel" name="tel" value={{passan.passanger.tel}} required>
+                </div>
+
+                <div class="form-group m-3">
+                  <label for="email">Email:</label>
+                  <input type="text" class="form-control" id="email" name="email" value={{passan.passanger.email}} required>
+                </div>
+
+                <div class="form-group m-3">
+                <label for="country">Country:</label>
+                <input type="text" class="form-control" id="country" name="country" value={{passan.passanger.country}} required>
+                </div>
+
+                <div class="form-group m-3">
+                <label for="city">City:</label>
+                <input type="text" class="form-control" id="city" name="city" value={{passan.passanger.city}} required>
+                </div>
+
+                <div class="form-group m-3">
+                <label for="adress">Adress:</label>
+                <input type="text" class="form-control" id="adress" name="adress" value={{passan.passanger.adress}} required>
+                </div>
+
+                <div class="form-group m-3">
+                <label for="birth_date">Birth date:</label>
+                <input type="text" class="form-control" id="birth_date" name="birth_date" value={{passan.passanger.birth_date}} required>
+                </div>
+
+                <div class="form-group m-3">
+                <label for="observations">Observations:</label>
+                <input type="text" class="form-control" id="observations" name="observations" value={{passan.passanger.observations}} required>
                 </div>
                     
             </div>
@@ -75,8 +147,19 @@
             </div>
 
         </form>
+        <script>
+          document.getElementById('name').value = '{{passan.passanger.name}}';
+          document.getElementById('dni').value = '{{passan.passanger.dni}}';
+          document.getElementById('tel').value = '{{passan.passanger.tel}}';
+          document.getElementById('email').value = '{{passan.passanger.email}}';
+          document.getElementById('country').value = '{{passan.passanger.country}}';
+          document.getElementById('city').value = '{{passan.passanger.city}}';
+          document.getElementById('adress').value = '{{passan.passanger.adress}}';
+          document.getElementById('birth_date').value = '{{passan.passanger.birth_date}}';
+          document.getElementById('observations').value = '{{passan.passanger.observations}}';
 
-        
+        </script> 
+         
       </div>
     </div>
 </div>

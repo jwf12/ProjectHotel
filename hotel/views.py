@@ -25,9 +25,10 @@ class Home(generic.ListView):
 
 
 class ShowPassData(generic.DetailView):
-    model = Passanger
+    model = Reservation
     template_name = 'passanger.html'
     context_object_name = 'passan'
+
 
 
 class PassangerEditarView(generic.UpdateView):
@@ -36,8 +37,13 @@ class PassangerEditarView(generic.UpdateView):
     fields = [
         'name',
         'dni',
+        'tel',
         'email',
-
+        'country',
+        'city',
+        'adress',
+        'birth_date',
+        'observations',
     ]
 
     def form_valid(self, form):
