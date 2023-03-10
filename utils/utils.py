@@ -18,9 +18,10 @@ def room_change_satate():
     return None
 
 
-# def room_checkout(request, pk):
-#     reservation = Reservation.objects.filter(pk=pk)
-#     reservation.state = 3
-#     success_url = reverse_lazy('hotel:home')
+def room_checkout(request, pk):
+    reservation = Reservation.objects.filter(pk=pk)
+    reservation.state = 3
+    
+    success_url = reverse_lazy('hotel:home')
 
-#     return render(request, 'index.html', context={'reservation': 'reservation',})
+    return render(request, 'index.html', context={'reservation': 'reservation',})

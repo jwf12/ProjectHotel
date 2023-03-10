@@ -2,6 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from .views import Home, CustomLoginView, SingUpView, ShowPassData, PassangerEditarView
 from utils.ticket import export_pdf
+from utils.utils import room_checkout
 
 
 
@@ -19,5 +20,5 @@ urlpatterns = [
 
     #utils
     path('pdf/<int:pk>/', export_pdf, name='export_pdf'),
-    # path('checkout/<int:pk>', room_checkout, name='checkout'),
+    path('checkout/<int:pk>', room_checkout, name='checkout'),
 ]
