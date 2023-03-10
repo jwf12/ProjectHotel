@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Passanger, Room, Reservation
 from utils.utils import room_change_satate
 from django.shortcuts import get_object_or_404
+from .form import PassangerForm
 
 #  Random id reservation: numbershortuuid.ShortUUID().random(length=6) 
 
@@ -29,28 +30,24 @@ class ShowPassData(generic.DetailView):
     template_name = 'passanger.html'
     context_object_name = 'passan'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['allpassan'] = Passanger.objects.get()
+        return context
+
 
 
 class PassangerEditarView(generic.UpdateView):
     model = Passanger
     success_url = reverse_lazy('hotel:home')
-    fields = [
-        'name',
-        'dni',
-        'tel',
-        'email',
-        'country',
-        'city',
-        'adress',
-        'birth_date',
-        'observations',
-    ]
+    form_class = PassangerForm
 
     def form_valid(self, form):
         return super().form_valid(form)
     
     def form_invalid(self,form):
         return super().form_invalid(form)
+
 
 # Login / register.
 class CustomLoginView(LoginView):
