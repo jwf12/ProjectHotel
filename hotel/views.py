@@ -39,9 +39,14 @@ class ShowPassData(generic.DetailView):
 
 class PassangerEditarView(generic.UpdateView):
     model = Passanger
+    template_name = 'passanger.html'
+    fields = ['name', 'dni', 'tel', 'email', 'country', 'city', 'adress', 'birth_date', 'observations']
+    context_object_name = 'passan'
     success_url = reverse_lazy('hotel:home')
-    form_class = PassangerForm
 
+    def get_object(self):
+        return get_object_or_404(Passanger, id=self.kwargs['pk'])
+    
     def form_valid(self, form):
         return super().form_valid(form)
     
@@ -54,7 +59,28 @@ class CustomLoginView(LoginView):
     def form_invalid(self, form):
         messages.error(self.request, 'Credenciales no validas.')        
         return super().form_invalid(form)
-    
+
+
+#modificar reserva. 
+class UpdateReservationView(generic.UpdateView):
+    model = Reservation
+    success_url = reverse_lazy('hotel:home')
+    fields = [
+        'room',
+        'date_in',
+        'date_out',
+        'number',
+        'amount_people',
+        'observations'
+    ]
+
+    def form_valid(self, form ):
+        return super().form_valid(form)
+
+
+    def form_invalid(self, form ):
+        return super().form_invalid(form)
+
 
 class SingUpView(CreateView):
     form_class = UserCreationForm
