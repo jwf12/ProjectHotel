@@ -15,41 +15,41 @@
                 <table class='mt-3'>
                   <tr class='border-bottom my-2'>
                     <td class='py-2'>Name:</td>
-                    <td>{{passan.passanger.name}}</td>
+                    <td>{{passan.name}}</td>
                   </tr>
                   <tr class='border-bottom my-2'>
                     <td class='py-2'>Dni:</td>
-                    <td>{{passan.passanger.dni}}</td>
+                    <td>{{passan.dni}}</td>
                   </tr>
                   <tr class='border-bottom my-2'>
                     <td class='py-2'>Tel:</td>
-                    <td>{{passan.passanger.tel}}</td>
+                    <td>{{passan.tel}}</td>
                   </tr>
                   <tr class='border-bottom my-2'>
                     <td class='py-2'>Email:</td>
-                    <td>{{passan.passanger.email}}</td>
+                    <td>{{passan.email}}</td>
                   </tr>
                   <tr class='border-bottom my-2'>
                     <td class='py-2'>Country:</td>
-                    <td>{{passan.passanger.country}}</td>
+                    <td>{{passan.country}}</td>
                   </tr>
                   <tr class='border-bottom my-2'>
                     <td class='py-2'>City:</td>
-                    <td>{{passan.passanger.city}}</td>
+                    <td>{{passan.city}}</td>
                   </tr>
                   <tr class='border-bottom my-2'>
                     <td class='py-2'>Address:</td>
-                    <td>{{passan.passanger.address}}</td>
+                    <td>{{passan.address}}</td>
                   </tr>
                   <tr class='border-bottom'>
                     <td class='py-2'>Birth date:</td>
-                    <td>{{passan.passanger.birth_date}}</td>
+                    <td>{{passan.birth_date}}</td>
                   </tr >
                   <tr>
                     <td colspan="2"><h5 class='my-3 border-bottom'>Observations:</h5></td>
                   </tr>
                   <tr >
-                    <td colspan="2 ">{{passan.passanger.observations}}</td>
+                    <td colspan="2 ">{{passan.observations}}</td>
                   </tr>
                 </table>
 
@@ -57,9 +57,9 @@
                 
                 <form action="" method='POST'>
                     {% csrf_token %}
-                    <button type='button' class='btn btn-primary mx-4 my-4 ' data-bs-toggle="modal" data-bs-target="#updateModal_{{allpassan.id}}">Editar</button>
+                    <button type='button' class='btn btn-primary mx-4 my-4 ' data-bs-toggle="modal" data-bs-target="#updateModal_{{passan.id}}">Editar</button>
                 </form>
-                <a href="{% url 'hotel:export_pdf' pk=passan.id %}" target="_blank">Abrir PDF</a>
+                <a href="{% url 'hotel:export_pdf' pk=allpassan.id %}" target="_blank">Abrir PDF</a>
                 
             </div>
             </div>
@@ -70,7 +70,7 @@
 
 <!-- Modal: editar tarea-->
 
-<div class="modal fade" id="updateModal_{{allpassan.id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{tarea.id}}" aria-hidden="true">
+<div class="modal fade" id="updateModal_{{passan.id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{tarea.id}}" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -79,53 +79,54 @@
         </div>
         
     
-        <form action="{% url 'hotel:update' allpassan.id %}" method = 'POST'>
+        <form action="{% url 'hotel:update' pk=passan.id %}" method = 'POST'>
             {% csrf_token %}
             <div class="modal-body">
+              <h2>{{allpassan.id}}</h2>
               <h2>{{passan.id}}</h2>
                 <div class="form-group m-3">
                     <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="name" name="name" value={{allpassan.name}} required>
+                    <input type="text" class="form-control" id="name" name="name" required>
                 </div>
 
                 <div class="form-group m-3">
                     <label for="dni">Dni:</label>
-                    <input type="text" class="form-control" id="dni" name="dni" value={{allpassan.dni}} required>
+                    <input type="text" class="form-control" id="dni" name="dni"  required>
                 </div>
 
                 <div class="form-group m-3">
                     <label for="tel">Tel:</label>
-                    <input type="text" class="form-control" id="tel" name="tel" value={{allpassan.tel}} required>
+                    <input type="text" class="form-control" id="tel" name="tel"  required>
                 </div>
 
                 <div class="form-group m-3">
                   <label for="email">Email:</label>
-                  <input type="text" class="form-control" id="email" name="email" value={{allpassan.email}} required>
+                  <input type="text" class="form-control" id="email" name="email"  required>
                 </div>
 
                 <div class="form-group m-3">
                 <label for="country">Country:</label>
-                <input type="text" class="form-control" id="country" name="country" value={{allpassan.country}} required>
+                <input type="text" class="form-control" id="country" name="country"  required>
                 </div>
 
                 <div class="form-group m-3">
                 <label for="city">City:</label>
-                <input type="text" class="form-control" id="city" name="city" value={{allpassan.city}} required>
+                <input type="text" class="form-control" id="city" name="city"  required>
                 </div>
 
                 <div class="form-group m-3">
                 <label for="adress">Adress:</label>
-                <input type="text" class="form-control" id="adress" name="adress" value={{allpassan.adress}} required>
+                <input type="text" class="form-control" id="adress" name="adress"  required>
                 </div>
 
                 <div class="form-group m-3">
                 <label for="birth_date">Birth date:</label>
-                <input type="text" class="form-control" id="birth_date" name="birth_date" value={{allpassan.birth_date}} required>
+                <input type="text" class="form-control" id="birth_date" name="birth_date"  required>
                 </div>
 
                 <div class="form-group m-3">
                 <label for="observations">Observations:</label>
-                <input type="text" class="form-control" id="observations" name="observations" value={{allpassan.observations}} required>
+                <input type="text" class="form-control" id="observations" name="observations"  required>
                 </div>
                     
             </div>
@@ -138,15 +139,15 @@
 
         </form>
         <script>
-          document.getElementById('name').value = '{{passan.passanger.name}}';
-          document.getElementById('dni').value = '{{passan.passanger.dni}}';
-          document.getElementById('tel').value = '{{passan.passanger.tel}}';
-          document.getElementById('email').value = '{{passan.passanger.email}}';
-          document.getElementById('country').value = '{{passan.passanger.country}}';
-          document.getElementById('city').value = '{{passan.passanger.city}}';
-          document.getElementById('adress').value = '{{passan.passanger.adress}}';
-          document.getElementById('birth_date').value = '{{passan.passanger.birth_date}}';
-          document.getElementById('observations').value = '{{passan.passanger.observations}}';
+          document.getElementById('name').value = '{{passan.name}}';
+          document.getElementById('dni').value = '{{passan.dni}}';
+          document.getElementById('tel').value = '{{passan.tel}}';
+          document.getElementById('email').value = '{{passan.email}}';
+          document.getElementById('country').value = '{{passan.country}}';
+          document.getElementById('city').value = '{{passan.city}}';
+          document.getElementById('adress').value = '{{passan.adress}}';
+          document.getElementById('birth_date').value = '{{passan.birth_date}}';
+          document.getElementById('observations').value = '{{passan.observations}}';
 
         </script> 
          

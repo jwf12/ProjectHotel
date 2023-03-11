@@ -9,7 +9,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Passanger, Room, Reservation
 from utils.utils import room_change_satate
 from django.shortcuts import get_object_or_404
-from .form import PassangerForm
 
 #  Random id reservation: numbershortuuid.ShortUUID().random(length=6) 
 
@@ -26,15 +25,15 @@ class Home(generic.ListView):
 
 
 class ShowPassData(generic.DetailView):
-    model = Reservation
+    model = Passanger
     template_name = 'passanger.html'
     context_object_name = 'passan'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['allpassan'] = Passanger.objects.get()
+        reservation = Reservation.objects.first() # o obtén el objeto Reservation que necesitas de alguna otra manera
+        context['allpassan'] = reservation
         return context
-
 
 
 class PassangerEditarView(generic.UpdateView):
@@ -46,12 +45,6 @@ class PassangerEditarView(generic.UpdateView):
 
     def get_object(self):
         return get_object_or_404(Passanger, id=self.kwargs['pk'])
-    
-    def form_valid(self, form):
-        return super().form_valid(form)
-    
-    def form_invalid(self,form):
-        return super().form_invalid(form)
 
 
 # Login / register.
