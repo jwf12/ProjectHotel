@@ -45,7 +45,12 @@ class PassangerEditarView(generic.UpdateView):
 
     def get_object(self):
         return get_object_or_404(Passanger, id=self.kwargs['pk'])
-
+    
+    def form_valid(self, form):
+        return super().form_valid(form)
+    
+    def form_invalid(self,form):
+        return super().form_invalid(form)
 
 # Login / register.
 class CustomLoginView(LoginView):

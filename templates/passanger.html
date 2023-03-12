@@ -59,7 +59,7 @@
                     {% csrf_token %}
                     <button type='button' class='btn btn-primary mx-4 my-4 ' data-bs-toggle="modal" data-bs-target="#updateModal_{{passan.id}}">Editar</button>
                 </form>
-                <a href="{% url 'hotel:export_pdf' pk=allpassan.id %}" target="_blank">Abrir PDF</a>
+                {% comment %} <a href="{% url 'hotel:export_pdf' pk=allpassan.id %}" target="_blank">Abrir PDF</a> {% endcomment %}
                 
             </div>
             </div>
@@ -82,8 +82,6 @@
         <form action="{% url 'hotel:update' pk=passan.id %}" method = 'POST'>
             {% csrf_token %}
             <div class="modal-body">
-              <h2>{{allpassan.id}}</h2>
-              <h2>{{passan.id}}</h2>
                 <div class="form-group m-3">
                     <label for="name">Name:</label>
                     <input type="text" class="form-control" id="name" name="name" required>
