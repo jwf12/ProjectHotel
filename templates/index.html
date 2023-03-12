@@ -23,7 +23,7 @@
                             Blocked  
                         {% endif %}                    
                     
-                    <p class='room-name mx-3'> room: {{room.name}} </p>
+                    <p class='room-name mx-3'> Room: {{room.name}} </p>
                     <p class='room-type ml-4'> Type: {{room.type_room}} </p>
                     
                     
@@ -39,13 +39,13 @@
                             <p class='room-type'>-Paxs: {{reservation.amount_people}}</p>
 
                             <a href="">Check-out</a>
+
                             <div class="container">
                                 <form action="{% url 'hotel:update_reserva' pk=reservation.id %}" method="post">
                                     {% csrf_token %}
-                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ reservation.id}}">
-                                        Editar Reserva
+                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{reservation.id}}">
+                                        Edit reservation
                                     </button>
-
                                 </form>
                             </div>
                             
@@ -90,15 +90,15 @@
   
   <!-- Modal -->
   {% for reservation in reservations %}
-  <div class="modal fade" id="exampleModal{{ reservation.id}}" tabindex="-1" aria-labelledby="editReservaModal" aria-hidden="true">
+  <div class="modal fade" id="exampleModal{{reservation.id}}" tabindex="-1" aria-labelledby="editReservaModal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="editReservaModal">Modal title</h1>
+          <h1 class="modal-title fs-5" id="editReservaModal">Edit reservation:</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form action="" method="post">
+            <form action="{% url 'hotel:update_reserva' pk=reservation.id %}" method="post">
               {% csrf_token %}
               <div class="modal-body">
                 <div class="form-group">
@@ -116,7 +116,7 @@
                </div>
                
                <div class="form-group">
-                <label for="date-in">Date out: </label>
+                <label for="date-out">Date out: </label>
                 <input type="date" name="date-out" id="date-out">
                </div>
                
@@ -133,12 +133,18 @@
                
                
               </div>
-
+              
+              <div class="modal-footer inline-block">
+                  <div class="text-start">
+                      <a href="{% url 'hotel:export_pdf' pk=reservation.id %}" target="_blank">Open PDF</a>
+                  </div>
+                  
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
           </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+
+        
           
         </div>
       </div>

@@ -29,11 +29,6 @@ class ShowPassData(generic.DetailView):
     template_name = 'passanger.html'
     context_object_name = 'passan'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        reservation = Reservation.objects.first() # o obtén el objeto Reservation que necesitas de alguna otra manera
-        context['allpassan'] = reservation
-        return context
 
 
 class PassangerEditarView(generic.UpdateView):
@@ -52,31 +47,34 @@ class PassangerEditarView(generic.UpdateView):
     def form_invalid(self,form):
         return super().form_invalid(form)
 
-# Login / register.
-class CustomLoginView(LoginView):
-    def form_invalid(self, form):
-        messages.error(self.request, 'Credenciales no validas.')        
-        return super().form_invalid(form)
-
 
 #modificar reserva. 
 class UpdateReservationView(generic.UpdateView):
     model = Reservation
+    template_name = 'index.html'
     success_url = reverse_lazy('hotel:home')
     fields = [
         'room',
         'date_in',
         'date_out',
-        'number',
         'amount_people',
-        'observations'
+        'observations',
     ]
+
+    def get_object(self):
+        return get_object_or_404(Reservation, id=self.kwargs['pk'])
 
     def form_valid(self, form ):
         return super().form_valid(form)
 
-
     def form_invalid(self, form ):
+        return super().form_invalid(form)
+
+
+# Login / register.
+class CustomLoginView(LoginView):
+    def form_invalid(self, form):
+        messages.error(self.request, 'Credenciales no validas.')        
         return super().form_invalid(form)
 
 
