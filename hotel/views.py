@@ -89,3 +89,5 @@ class SingUpView(CreateView):
         response = super().form_invalid(form)
         messages.error(self.request, 'Las contraseñas no coinciden.')        
         return response
+
+
