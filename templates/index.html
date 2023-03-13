@@ -4,13 +4,12 @@
 {% block content %}
 
 <div class="title text-center"><h2>Rooms:</h2></div>
-
-
+ <!-- Room Cards --> 
 <div class="row m-4 ">
     <div class="col d-flex justify-content-center flex-wrap">
-
+        <!-- Upper Room Card --> 
         {% for room in rooms %}
-        <div class="card col-3 m-3" style="width: 18rem; background-color:{{ room.status}}; height: 250px;">
+        <div class="card col-3 m-3" style="width: 18rem; background-color:{{ room.status}};">
             <div class="card-body">
                 <div class="card-top d-flex border-bottom">
                     <p class="card-state ">
@@ -28,23 +27,28 @@
                     
                     
                 </div>
-
+                <!-- Down part Room Card --> 
                 <div class="fecha my-3">                    
                     {% for reservation in reservations %}
                         {% if reservation.room.name == room.name %}      
-                           
                             <a href="{% url 'hotel:passanger-data' pk=reservation.passanger.id %}" >- {{reservation.passanger}}</a>
                             <p class='mb-1 mt-2 font-monospace'>-In: {{reservation.date_in|date:"d-m-Y"}}</p>
                             <p class='mb-1 font-monospace'>-Out: {{reservation.date_out|date:"d-m-Y"}}</p>
                             <p class='room-type'>-Paxs: {{reservation.amount_people}}</p>
 
-                            <a href="">Check-out</a>
+                            <!-- Buttons Room Cards --> 
 
-                            <div class="container">
+                            <!-- Check out button --> 
+                            <div class="container d-flex">
+                                <div class="checkout bg-danger rounded pt-1 " style="width: 165px;">
+                                    <a href=""  class="mt-2 text-left"style="font-size:12px; font-weight:bold; color:#fff;">Check-out</a>
+                                </div>
+                                
+                                <!-- Edit reservation button --> 
                                 <form action="{% url 'hotel:update_reserva' pk=reservation.id %}" method="post">
                                     {% csrf_token %}
-                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{reservation.id}}">
-                                        Edit reservation
+                                    <button type="button" class="btn btn-warning ml-4" style="width: 105px; font-size:15px;"data-bs-toggle="modal" data-bs-target="#updateModal_{{reservation.id}}">
+                                        Edit
                                     </button>
                                 </form>
                             </div>
@@ -61,96 +65,69 @@
     </div>
 </div>
 
-<!--Data Passanger modal-->
 
-
-<div class="modal fade" id="passModal" tabindex="-1" aria-labelledby="editReservaModal" aria-hidden="true">
+<!--Reservation modal upate -->
+{% for reservation in reservations %}
+<div class="modal fade" id="updateModal_{{reservation.id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{reservation.id}}" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="editReservaModal">Passanger info</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="bi bi-journal-bookmark"></i> Editar Tarea:</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        
-            <div class="modal-body">
-              <p>{{passan.name}}</p>
+    
+        <form action="{% url 'hotel:update_reserva' reservation.id %}" method = 'POST'>
+            {% csrf_token %}
+            <div class="modal-body">           
+            
+            <div class="form-group m3">
+                <label for="room">Room:</label>
+                    <select class="form-control" id="room" name="room">
+                        {% for room in rooms %}
+                            <option value="{{ room.id }}">
+                                {{ room.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
             </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+                <div class="form-group m-3">
+                    <label for="date_in">date_in:</label>
+                    <input type="date" class="form-control" id="date_in" name="date_in" value={{reservation.date_in|date:'Y-m-d'}} >
+                </div>
+                <div class="form-group m-3">
+                    <label for="date_out">date_out:</label>
+                    <input type="date" class="form-control" id="date_out" name="date_out" value={{reservation.date_out|date:'Y-m-d'}} >
+                </div>
+                <div class="form-group m-3">
+                    <label for="amount_people">amount_people:</label>
+                    <input type="number" class="form-control" id="amount_people" name="amount_people" value={{reservation.amount_people}} >
+                </div>
+                <div class="form-group m-3">
+                    <label for="observations">Observation:</label>
+                    <textarea name="observations" id="" cols="30" rows="10">{{reservation.observations}}</textarea>
+                </div>
+
+                    
+            </div>
+
+
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar tarea</button>
+            </div>
+
+        </form>
+        <div class="modal-footer inline-block">
+            <div class="text-start">
+                <a href="{% url 'hotel:export_pdf' pk=reservation.id %}" target="_blank">Open PDF</a>
         </div>
+        
       </div>
     </div>
 </div>
-
-<!--Reservation modal upate -->
-
-
-  
-  <!-- Modal -->
-  {% for reservation in reservations %}
-  <div class="modal fade" id="exampleModal{{reservation.id}}" tabindex="-1" aria-labelledby="editReservaModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="editReservaModal">Edit reservation:</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form action="{% url 'hotel:update_reserva' pk=reservation.id %}" method="post">
-              {% csrf_token %}
-              <div class="modal-body">
-                <div class="form-group">
-                    <label for="room">Room: </label>
-                    <select name="room" id="room">
-                    {% for room in rooms %}
-                        <option value="room">{{room.name}}</option>
-                    {% endfor %}
-                    </select>  
-                    
-                </div>
-               <div class="form-group">
-                <label for="date-in">Date in: </label>
-                <input type="date" name="date-in" id="date-in">
-               </div>
-               
-               <div class="form-group">
-                <label for="date-out">Date out: </label>
-                <input type="date" name="date-out" id="date-out">
-               </div>
-               
-               <div class="form-group">
-                <label for="amount_people">Amount people: </label>
-                <input type="number" name="amount_people" id="amount_people" placeholder="{{reservation.amount_people}}">
-               </div>
-               
-               <div class="form-group">
-                <label for="observations">Observations: </label>
-                <textarea name="observations" id="observations" cols="30" rows="10">{{reservation.observations}}</textarea>
-               </div>
-
-               
-               
-              </div>
-              
-              <div class="modal-footer inline-block">
-                  <div class="text-start">
-                      <a href="{% url 'hotel:export_pdf' pk=reservation.id %}" target="_blank">Open PDF</a>
-                  </div>
-                  
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
-          </form>
-        </div>
-
-        
-          
-        </div>
-      </div>
-    </div>
-  </div>
-  {% endfor %}
+{% endfor %}
 
 
 {% endblock content %}

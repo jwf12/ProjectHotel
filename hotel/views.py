@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
@@ -33,14 +33,20 @@ class ShowPassData(generic.DetailView):
 
 class PassangerEditarView(generic.UpdateView):
     model = Passanger
-    template_name = 'passanger.html'
-    fields = ['name', 'dni', 'tel', 'email', 'country', 'city', 'adress', 'birth_date', 'observations']
-    context_object_name = 'passan'
     success_url = reverse_lazy('hotel:home')
+    fields = [
+        'name',
+        'dni',
+        'tel',
+        'country',
+        'city',
+        'adress',
+        'email',
+        'birth_date',
+        'observations',
 
-    def get_object(self):
-        return get_object_or_404(Passanger, id=self.kwargs['pk'])
-    
+    ]
+
     def form_valid(self, form):
         return super().form_valid(form)
     
@@ -51,23 +57,19 @@ class PassangerEditarView(generic.UpdateView):
 #modificar reserva. 
 class UpdateReservationView(generic.UpdateView):
     model = Reservation
-    template_name = 'index.html'
     success_url = reverse_lazy('hotel:home')
     fields = [
-        'room',
-        'date_in',
-        'date_out',
-        'amount_people',
-        'observations',
+            'room',
+            'date_in',
+            'date_out',
+            'amount_people',
+            'observations',
     ]
 
-    def get_object(self):
-        return get_object_or_404(Reservation, id=self.kwargs['pk'])
-
-    def form_valid(self, form ):
+    def form_valid(self, form):
         return super().form_valid(form)
-
-    def form_invalid(self, form ):
+    
+    def form_invalid(self,form):
         return super().form_invalid(form)
 
 

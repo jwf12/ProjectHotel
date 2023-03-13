@@ -8,7 +8,7 @@ class Passanger(models.Model):
     country = models.CharField(max_length=205, null=True, blank=True)
     city  = models.CharField(max_length=205, null=True, blank=True)
     adress  = models.CharField(max_length=205, null=True, blank=True)
-    email = models.EmailField(null=True, blank=True)
+    email = models.CharField(max_length=205, null=True, blank=True)
     birth_date = models.DateField()
     observations = models.TextField(null=True, blank=True)
 

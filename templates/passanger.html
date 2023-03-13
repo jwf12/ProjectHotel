@@ -39,7 +39,7 @@
                   </tr>
                   <tr class='border-bottom my-2'>
                     <td class='py-2'>Address:</td>
-                    <td>{{passan.address}}</td>
+                    <td>{{passan.adress}}</td>
                   </tr>
                   <tr class='border-bottom'>
                     <td class='py-2'>Birth date:</td>
@@ -70,88 +70,85 @@
 
 <!-- Modal: editar tarea-->
 
-<div class="modal fade" id="updateModal_{{passan.id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{tarea.id}}" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="bi bi-journal-bookmark"></i> Edit Info:</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        
-    
-        <form action="{% url 'hotel:update' pk=passan.id %}" method = 'POST'>
-            {% csrf_token %}
-            <div class="modal-body">
-                <div class="form-group m-3">
-                    <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
-                </div>
+ 
 
-                <div class="form-group m-3">
-                    <label for="dni">Dni:</label>
-                    <input type="text" class="form-control" id="dni" name="dni"  required>
-                </div>
-
-                <div class="form-group m-3">
-                    <label for="tel">Tel:</label>
-                    <input type="text" class="form-control" id="tel" name="tel"  required>
-                </div>
-
-                <div class="form-group m-3">
-                  <label for="email">Email:</label>
-                  <input type="text" class="form-control" id="email" name="email"  required>
-                </div>
-
-                <div class="form-group m-3">
-                <label for="country">Country:</label>
-                <input type="text" class="form-control" id="country" name="country"  required>
-                </div>
-
-                <div class="form-group m-3">
-                <label for="city">City:</label>
-                <input type="text" class="form-control" id="city" name="city"  required>
-                </div>
-
-                <div class="form-group m-3">
-                <label for="adress">Adress:</label>
-                <input type="text" class="form-control" id="adress" name="adress"  required>
-                </div>
-
-                <div class="form-group m-3">
-                <label for="birth_date">Birth date:</label>
-                <input type="text" class="form-control" id="birth_date" name="birth_date"  required>
-                </div>
-
-                <div class="form-group m-3">
-                <label for="observations">Observations:</label>
-                <input type="text" class="form-control" id="observations" name="observations"  required>
-                </div>
-                    
-            </div>
-
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button type="submit" class="btn btn-primary">Guardar</button>
-            </div>
-
-        </form>
-        <script>
-          document.getElementById('name').value = '{{passan.name}}';
-          document.getElementById('dni').value = '{{passan.dni}}';
-          document.getElementById('tel').value = '{{passan.tel}}';
-          document.getElementById('email').value = '{{passan.email}}';
-          document.getElementById('country').value = '{{passan.country}}';
-          document.getElementById('city').value = '{{passan.city}}';
-          document.getElementById('adress').value = '{{passan.adress}}';
-          document.getElementById('birth_date').value = '{{passan.birth_date}}';
-          document.getElementById('observations').value = '{{passan.observations}}';
-
-        </script> 
+ <div class="modal fade" id="updateModal_{{passan.id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{passan.id}}" aria-hidden="true">
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="bi bi-journal-bookmark"></i> Editar:</h1>
+           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
          
-      </div>
-    </div>
-</div>
+     
+         <form action="{% url 'hotel:update' passan.id %}" method = 'POST'>
+             {% csrf_token %}
+             <div class="modal-body">
+                 
+                 <div class="form-group m-3">
+                     <label for="name">Título:</label>
+                     <input type="text" class="form-control" id="name" name="name">
+                 </div>
+                 <div class="form-group m-3">
+                     <label for="dni">Dni:</label>
+                     <input type="text" class="form-control" id="dni" name="dni" >
+                 </div>
+                 <div class="form-group m-3">
+                     <label for="tel">Tel:</label>
+                     <input type="text" class="form-control" id="tel" name="tel" >
+                 </div>
+                 <div class="form-group m-3">
+                   <label for="country">Country:</label>
+                   <input type="text" class="form-control" id="country" name="country" >
+                 </div>
+                 <div class="form-group m-3">
+                   <label for="city">City:</label>
+                   <input type="text" class="form-control" id="city" name="city" >
+                 </div>
+                 <div class="form-group m-3">
+                   <label for="adress">Adress:</label>
+                   <input type="text" class="form-control" id="adress" name="adress" >
+                 </div>
+                 <div class="form-group m-3">
+                   <label for="email">Email:</label>
+                   <input type="email" class="form-control" id="email" name="email" >
+                 </div>
+                 <div class="form-group m-3">
+                  <label for="birth_date">birth date:</label>
+                  <input type="date" class="form-control" id="birth_date" name="birth_date" required>
+                </div>
+                 <div class="form-group m-3">
+                  <label for="observations">Email:</label>
+                  <textarea name="observations" id="" cols="30" rows="10">{{passan.observations}}</textarea>
+                </div>
+                     
+             </div>
+ 
+ 
+             <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+               <button type="submit" class="btn btn-primary">Guardar tarea</button>
+             </div>
+ 
+         </form>
+ 
+         
+       </div>
+     </div>
+ </div>
 
+ 
+
+<script>
+  document.getElementById('name').value = '{{passan.name}}';
+  document.getElementById('dni').value = '{{passan.dni}}';
+  document.getElementById('tel').value = '{{passan.tel}}';
+  document.getElementById('country').value = '{{passan.country}}';
+  document.getElementById('city').value = '{{passan.city}}';
+  document.getElementById('adress').value = '{{passan.adress}}';
+  document.getElementById('email').value = '{{passan.email}}';
+  document.getElementById('birth_date').value = '{{passan.birth_date|date:'Y-m-d'}}';
+  document.getElementById('observations').value = '{{passan.observations}}';
+</script>
 
 {% endblock content %}
