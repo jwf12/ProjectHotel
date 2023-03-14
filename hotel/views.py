@@ -21,16 +21,34 @@ class Home(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['reservations'] = Reservation.objects.filter(status_res=2) 
         room_change_satate()   
-        context['passanger'] = Passanger.objects.all()
         return context
 
 
-# class ShowPassData(generic.DetailView):
-#     model = Passanger
-#     template_name = 'passanger.html'
-#     context_object_name = 'passan'
+class ShowPassData(generic.DetailView):
+    model = Passanger
+    template_name = 'passanger.html'
+    context_object_name = 'passan'
 
 
+class ShowRooms(generic.ListView):
+    queryset = Room.objects.all().order_by('id')
+    template_name = 'rooms.html'
+    context_object_name = 'rooms'
+
+
+class RoomEditarView(generic.UpdateView):
+    model = Room
+    success_url = reverse_lazy('hotel:home')
+    fields = [
+        'status',
+        ]
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+    
+    def form_invalid(self,form):
+        return super().form_invalid(form)
+    
 
 class PassangerEditarView(generic.UpdateView):
     model = Passanger
