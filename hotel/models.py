@@ -32,6 +32,7 @@ class Room(models.Model):
     type_room = models.CharField(max_length=205)
     state = models.IntegerField(choices=STATE_STATE, default=1)
     status = models.CharField(max_length=7, choices=STATUS_COLOR, default='#9bf0ac')
+    observations = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name

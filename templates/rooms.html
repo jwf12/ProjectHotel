@@ -20,7 +20,7 @@
                     <button type='button' class='btn btn-primary mx-4 my-4 px-5 ' data-bs-toggle="modal" data-bs-target="#updateModal_{{room.id}}">{{room.name}}</button>
                 </form></td>
 
-                <td class="col-8"style="background-color:{{room.status}};">{{room.get_status_display}}</td>
+                <td class="col-8"style="background-color:{{room.status}}; color:black;">{{room.get_status_display}}<br>Motivo: {{room.observations}}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -48,10 +48,11 @@
                 <div class="form-group mx-3">
                     <label for="status">status:</label>
                         <select class="form-control" id="status" name="status">
-                            
-                                <option value="{{ room.id }}">
-                                    {{room.get_status_display}}
-                                </option>
+                            {% for room in rooms %}                            
+                            <option value="{{ room.id }}">
+                                {{room.get_status_display}}
+                            </option>
+                            {% endfor %}
                             
                         </select>
                 </div>
