@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import Home, CustomLoginView, SingUpView, ShowPassData, PassangerEditarView, UpdateReservationView
+from .views import Home, CustomLoginView, SingUpView,  PassangerEditarView, UpdateReservationView
 from utils.ticket import export_pdf
 from utils.utils import room_checkout
 
@@ -15,7 +15,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name = 'login.html'), name='logout'),
 
     # passanger info
-    path('pass-info/<int:pk>', ShowPassData.as_view(), name = 'passanger-data'),
+    #path('pass-info/<int:pk>', ShowPassData.as_view(), name = 'passanger-data'),
     path('update/<int:pk>', PassangerEditarView.as_view(), name='update'),
 
     #reservations 

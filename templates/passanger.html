@@ -18,11 +18,11 @@
                     <td>{{passan.name}}</td>
                   </tr>
                   <tr class='border-bottom my-2'>
-                    <td class='py-2'>Dni:</td>
+                    <td class='py-2'>Id:</td>
                     <td>{{passan.dni}}</td>
                   </tr>
                   <tr class='border-bottom my-2'>
-                    <td class='py-2'>Tel:</td>
+                    <td class='py-2'>Phone:</td>
                     <td>{{passan.tel}}</td>
                   </tr>
                   <tr class='border-bottom my-2'>
@@ -57,7 +57,7 @@
                 
                 <form action="" method='POST'>
                     {% csrf_token %}
-                    <button type='button' class='btn btn-primary mx-4 my-4 ' data-bs-toggle="modal" data-bs-target="#updateModal_{{passan.id}}">Editar</button>
+                    <button type='button' class='btn btn-primary mx-4 my-4 ' data-bs-toggle="modal" data-bs-target="#updateModal_{{passan.id}}">Edit</button>
                 </form>
                 
                 
@@ -68,15 +68,14 @@
 </div>
 
 
-<!-- Modal: editar tarea-->
+<!-- Modal: editar Passanger-->
 
- 
 
  <div class="modal fade" id="updateModal_{{passan.id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{passan.id}}" aria-hidden="true">
      <div class="modal-dialog">
        <div class="modal-content">
          <div class="modal-header">
-           <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="bi bi-journal-bookmark"></i> Editar:</h1>
+           <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="bi bi-journal-bookmark"></i> Edit:</h1>
            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          
@@ -86,15 +85,15 @@
              <div class="modal-body">
                  
                  <div class="form-group m-3">
-                     <label for="name">Título:</label>
+                     <label for="name">Name:</label>
                      <input type="text" class="form-control" id="name" name="name">
                  </div>
                  <div class="form-group m-3">
-                     <label for="dni">Dni:</label>
+                     <label for="dni">Id:</label>
                      <input type="text" class="form-control" id="dni" name="dni" >
                  </div>
                  <div class="form-group m-3">
-                     <label for="tel">Tel:</label>
+                     <label for="tel">Phone:</label>
                      <input type="text" class="form-control" id="tel" name="tel" >
                  </div>
                  <div class="form-group m-3">
@@ -106,7 +105,7 @@
                    <input type="text" class="form-control" id="city" name="city" >
                  </div>
                  <div class="form-group m-3">
-                   <label for="adress">Adress:</label>
+                   <label for="adress">Address:</label>
                    <input type="text" class="form-control" id="adress" name="adress" >
                  </div>
                  <div class="form-group m-3">
@@ -114,11 +113,11 @@
                    <input type="email" class="form-control" id="email" name="email" >
                  </div>
                  <div class="form-group m-3">
-                  <label for="birth_date">birth date:</label>
+                  <label for="birth_date">Birth date:</label>
                   <input type="date" class="form-control" id="birth_date" name="birth_date" required>
                 </div>
                  <div class="form-group m-3">
-                  <label for="observations">Email:</label>
+                  <label for="observations">Observations:</label>
                   <textarea name="observations" id="" cols="30" rows="10">{{passan.observations}}</textarea>
                 </div>
                      
@@ -126,8 +125,8 @@
  
  
              <div class="modal-footer">
-               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-               <button type="submit" class="btn btn-primary">Guardar tarea</button>
+               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">Save</button>
              </div>
  
          </form>

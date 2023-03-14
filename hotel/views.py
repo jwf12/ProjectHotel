@@ -21,13 +21,14 @@ class Home(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['reservations'] = Reservation.objects.filter(status_res=2) 
         room_change_satate()   
+        context['passanger'] = Passanger.objects.all()
         return context
 
 
-class ShowPassData(generic.DetailView):
-    model = Passanger
-    template_name = 'passanger.html'
-    context_object_name = 'passan'
+# class ShowPassData(generic.DetailView):
+#     model = Passanger
+#     template_name = 'passanger.html'
+#     context_object_name = 'passan'
 
 
 
