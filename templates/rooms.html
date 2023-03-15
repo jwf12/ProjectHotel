@@ -2,17 +2,19 @@
 
 
 {% block content %}
+<!--Room tables-->
 <div class="row m-4 ">
     <div class="col d-flex justify-content-center flex-wrap">
 
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th class="col-4 ">Rooms:</th>
+                <th class="col-4 ">Rooms:</th> 
                 <th class="col-8">Status:</th>
             </tr>
             </thead>
             <tbody>
+                <!--Iteration, each room has it's status and observation, bg second column shows the status -->
             {% for room in rooms %}
                 <tr>
                 <td class="col-4 text-center"><form action="" method='POST'>
@@ -37,26 +39,29 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="bi bi-journal-bookmark"></i> Edit:</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="bi bi-journal-bookmark"></i> Edit room status:</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        
-    
-        <form action="{% url 'hotel:update_room' room.id %}" method = 'POST'>
+
+        <!--Status Buttons function in utils.utils-->
+        <div class="container-buttons col-8 mx-auto">
+            <div class="checkout bg-success rounded pt-1 mt-4 mb-1 text-center" >
+                <a href="{% url 'hotel:room_clean' pk=room.id %}"  class="mt-2 text-left"style="font-size:12px; font-weight:bold; color:#fff;">Clean</a>
+            </div>
+            <div class="checkout bg-warning rounded pt-1 my-1 text-center" >
+                <a href="{% url 'hotel:room_dirty' pk=room.id %}"  class="mt-2 text-left"style="font-size:12px; font-weight:bold; color:#fff;">Dirty</a>
+            </div>
+            <div class="checkout bg-danger rounded pt-1 my-1 text-center mb-4" >
+                <a href="{% url 'hotel:room_blocked' pk=room.id %}"  class="mt-2 text-left"style="font-size:12px; font-weight:bold; color:#fff;">Blocked</a>
+            </div>
+        </div>    
+
+        <!--Observation form-->
+        <form action="{% url 'hotel:update_room' room.id%}" method='POST'>      
             {% csrf_token %}
-            <div class="modal-body">                
-                <div class="form-group mx-3">
-                    <label for="status">status:</label>
-                        <select class="form-control" id="status" name="status">
-                            {% for room in rooms %}                            
-                            <option value="{{ room.id }}">
-                                {{room.get_status_display}}
-                            </option>
-                            {% endfor %}
-                            
-                        </select>
-                </div>
-                    
+            <div class="form-group m3 ml-2">
+                <label for="observations">Observations:</label>
+                <textarea name="observations" id="observations" cols="30" rows="5" >{{room.observations}}</textarea>
             </div>
 
 

@@ -20,16 +20,31 @@ def room_change_satate():
     
     return None
 
-
+#function used in index to check out a room
 def room_checkout(request, pk):
     reservation = Reservation.objects.get(pk=pk)
     reservation.status_res = 3
     reservation.save()
     return HttpResponseRedirect(reverse_lazy('hotel:home'))
 
-# def room_checkout(request, pk):
-#     reservation = Reservation.objects.filter(pk=pk)
-#     reservation.status_res = 3
-#     success_url = reverse_lazy('hotel:home')
-#     return render(request, 'index.html', context={'reservation': 'reservation',})
 
+#Status buttons used in rooms.html
+def room_clean(request, pk):
+    room = Room.objects.get(pk=pk)
+    room.status = '#9bf0ac'
+    room.save()
+    return HttpResponseRedirect(reverse_lazy('hotel:room'))
+
+
+def room_blocked(request, pk):
+    room = Room.objects.get(pk=pk)
+    room.status = '#D47777'
+    room.save()
+    return HttpResponseRedirect(reverse_lazy('hotel:room'))
+
+
+def room_dirty(request, pk):
+    room = Room.objects.get(pk=pk)
+    room.status = '#fffb8f'
+    room.save()
+    return HttpResponseRedirect(reverse_lazy('hotel:room'))

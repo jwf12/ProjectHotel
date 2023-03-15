@@ -38,9 +38,9 @@ class ShowRooms(generic.ListView):
 
 class RoomEditarView(generic.UpdateView):
     model = Room
-    success_url = reverse_lazy('hotel:home')
+    success_url = reverse_lazy('hotel:room')
     fields = [
-        'status',
+        'observations',
         ]
 
     def form_valid(self, form):
