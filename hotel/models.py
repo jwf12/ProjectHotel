@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from shortuuid.django_fields import ShortUUIDField
 
 class Passanger(models.Model):
     name = models.CharField(max_length=205)
@@ -48,7 +49,7 @@ class Reservation(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     date_in = models.DateField()
     date_out = models.DateField()
-    number = models.CharField(max_length=20)
+    number = ShortUUIDField(length=6)
     amount_people = models.IntegerField()
     status_res = models.IntegerField(choices=STATUS_RESERVATION)
     observations = models.TextField()

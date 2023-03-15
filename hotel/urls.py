@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import Home, CustomLoginView, SingUpView,  PassangerEditarView, ShowPassData, UpdateReservationView, ShowRooms, RoomEditarView
+from .views import Home, CustomLoginView, SingUpView,  PassangerEditarView, ShowPassData, UpdateReservationView, ShowRooms, RoomEditarView, CreateReservation
 from utils.ticket import export_pdf
 from utils.utils import room_checkout, room_clean, room_blocked, room_dirty
 
@@ -20,6 +20,8 @@ urlpatterns = [
 
     #reservations edit in index.html
     path('reservations/update/<int:pk>', UpdateReservationView.as_view(), name='update_reserva'),
+    #create reservation
+    path('create-reservation/', CreateReservation.as_view(), name = 'create_reservation'),
     
     #Rooms
     path('rooms/', ShowRooms.as_view(), name='room'),

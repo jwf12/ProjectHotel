@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row-6">
+        <div class="col-">
+            <form action="{% url 'hotel:create_reservation' %}" method='POST'>
+                {% csrf_token %}
+                {% comment %} <div class="form-group m-3">
+                    <label for="passanger">passangers:</label>
+                    <select name="passanger" id="passanger">
+                        {% for passanger in passangers %}
+                        <option value="{{passanger.id}}">{{passanger.name}}</option>
+                        {% endfor %}
+                    </select>                            
+                </div>
+                <div class="form-group m-3">
+                    <label for="room">Rooms:</label>
+                    <select name="room" id="room">
+                        {% for room in rooms %}
+                        <option value="{{room.id}}">{{room.name}}</option>
+                        {% endfor %}
+                    </select>                            
+                </div>
+                <div class="form-group m-3">
+                    <label for="date_in">Date in:</label>
+                    <input type="date" name='date_in' id='date_in'>            
+                </div>
+                <div class="form-group m-3">
+                    <label for="date_out">Date out:</label>
+                    <input type="date" name='date_out' id='date_out'>           
+                </div>
+                <div class="form-group m-3">
+                    <label for="number">Res Num:</label>
+                    <input type="text" name='number' id='number'>         
+                </div>
+                <div class="form-group m-3">
+                    <label for="amount_people">Amount people:</label>
+                    <input type="number" name='amount_people' id='amount_people'>            
+                </div>
+                <div class="form-group m-3">
+                    <label for="status_res">status_ress:</label>
+                    <select name="status_res" id="status_res">
+                        
+                        <option value="">reserved</option>
+                        <option value="">check-in</option>
+                        <option value="">check-out</option>
+                       
+                    </select>                            
+                </div>
+                <div class="form-group m-3">
+                    <label for="observations">Observations</label>
+                    <textarea name="observations" id="observations" cols="30" rows="5"></textarea>            
+                </div> {% endcomment %}
+                
+                {{ form.as_p }}
+                
+                <button type="submit" class="btn btn-primary">Save</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}
