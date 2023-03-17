@@ -91,7 +91,7 @@
                 <label for="room">Room:</label>
                     <select class="form-control" id="room" name="room">
                         {% for room in rooms %}
-                            {% if room.status == '#9bf0ac' and room.state == 1 %}
+                            {% if room.status == '#9bf0ac' and room.state == 1 or room.name == reservation.room.name %}
                                 <option value="{{ room.id }}">
                                     {{ room.name }}
                                 </option>
