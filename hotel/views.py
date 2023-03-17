@@ -121,6 +121,7 @@ class CreateReservation(generic.CreateView):
     def form_invalid(self,form):
         return super().form_invalid(form)
 
+
 # Login / register.
 class CustomLoginView(LoginView):
     def form_invalid(self, form):

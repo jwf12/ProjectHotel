@@ -39,7 +39,7 @@ class Room(models.Model):
         return self.name
 
 class Reservation(models.Model):
-    STATUS_RESERVATION=(  
+    STATUS_RESERVATION=(
             (1, 'reserved'),
             (2, 'check-in'),
             (3, 'check-out'),
@@ -51,7 +51,7 @@ class Reservation(models.Model):
     date_out = models.DateField()
     number = ShortUUIDField(length=6)
     amount_people = models.IntegerField()
-    status_res = models.IntegerField(choices=STATUS_RESERVATION)
+    status_res = models.IntegerField(choices=STATUS_RESERVATION, default = 'not-reserved')
     observations = models.TextField()
 
 

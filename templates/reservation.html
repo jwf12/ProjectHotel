@@ -10,35 +10,55 @@
         <div class="row-6">
             <form action="{% url 'hotel:create_reservation' %}" method='POST' class='d-flex flex-wrap'>
                 {% csrf_token %}
-                
-                <div class="container">  
+                <div class="form-group m3">
 
-                    <div class="form-group d-flex">
-                      <label for="passanger">Passenger:</label>    
-                    {% render_field form.passanger class+="form-group mx-2"%}
-                    <label for="room">Room:</label> 
-                    {% render_field form.room class+="form-group mx-2" %}  
-                    </div>     
+                    <label for="passanger">Passanger:</label>
+                    {{form.passanger}}
+                    <div class="container">
+                        <label for="room">Rooms:</label>
+                        <select name="room" id="room">
+                            {% for room in rooms %}                    
+                                {% if room.status == '#9bf0ac' and room.state == 1 %}    
+                                        <option value="{{room.id}}">{{room.name}}</option>
+                                {% endif %}  
+                            {% endfor %}
+                        </select>                
+                    </div>
+                    <div class="form-group">
 
-                    <div class="form-group d-flex">
-                    <label for="date_in">Date in:</label>
-                    {% render_field form.date_in type="date" class+="form-group mx-2" %}
-                    <label for="date_out">Date out:</label>
-                    {% render_field form.date_out type="date" class+="form-group mx-2" %}
+                        <label for="date_in">Date in:</label>
+                        {% render_field form.date_in type='date' %}
                     </div>
 
-                    <div class="form-group d-flex">
+                    <div class="form-group">
+                        <label for="date_out">Date out:</label>
+                        {% render_field form.date_out type='date' %}
+                    </div>
+
+                    <div class="form-group">
+
                         <label for="number">Number:</label>
-                        {% render_field form.number class+="form-group mx-2" %}
-                        <label for="amount_people">People:</label>
-                        {% render_field form.amount_people class+="form-group mx-2 "  %}
+                        {{form.number}}
                     </div>
-                    <label for="status_res">Status:</label>
-                    {% render_field form.status_res class+="form-group" %}
-                    {% render_field form.observations class+="form-group" %}                
-                </div>
 
-                            
+                    <div class="form-group">
+
+                        <label for="amount_people">People:</label>
+                        {{form.amount_people}}
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="status_res">Status:</label>
+                        {{form.status_res}}
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="observations">Observation:</label>
+                        {{form.observations}}                            
+                    </div>
+                </div>
                 
                 <button type="submit" class="btn btn-primary">Save</button>
 
