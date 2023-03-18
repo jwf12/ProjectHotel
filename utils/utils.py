@@ -4,6 +4,7 @@ from django.urls import reverse, reverse_lazy
 from django.db.models import F
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
+from datetime import date
 
 # Funcion para cambiar el estado del room en caso que se le de check in a la reserva.
 
@@ -48,3 +49,11 @@ def room_dirty(request, pk):
     room.status = '#fffb8f'
     room.save()
     return HttpResponseRedirect(reverse_lazy('hotel:room'))
+
+
+def reservations_check(room, date_in, date_out, status_res):
+    today = date.today()
+    reservation = Reservation.objects.filter(room_id = room, date_in__lte = today, date_out__gte = today, status_res = 1)
+
+    if reservation:
+        return 'ya existe'

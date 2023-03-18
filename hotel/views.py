@@ -108,7 +108,7 @@ class CreateReservation(generic.CreateView):
         'status_res',
         'observations',
     ]
-
+   
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['rooms'] = Room.objects.all()
@@ -116,6 +116,21 @@ class CreateReservation(generic.CreateView):
         return context
     
     def form_valid(self, form):
+        room = form.cleaned_data.get('room')
+        date_in = form.cleaned_data.get('date_in')
+        date_out = form.cleaned_data.get('date_out')
+        status_res = form.cleaned_data.get('status_res')
+        reservation_check = Reservation.objects.filter(
+            room = room,
+            date_in__lte = date_in,
+            date_out__gte = date_out,
+            status_res = status_res,
+        )
+
+        if reservation_check:
+            messages.error(self.request, 'Ya esxiste una reserva para esta hab')
+            return super().form_invalid(form)
+        
         return super().form_valid(form)
     
     def form_invalid(self,form):
