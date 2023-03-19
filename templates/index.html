@@ -23,7 +23,7 @@
                         {% endif %}                    
                     
                     <p class="ml-2">Room: <strong>{{room.name}}</strong></p>                    
-                    <p class='room-type ml-4'> Type: {{room.type_room}} </p>
+                    <p class='room-type ml-4'> Type: {{room.get_type_room_display}} </p>
                     
                     
                 </div>
@@ -91,7 +91,7 @@
                 <label for="room">Room:</label>
                     <select class="form-control" id="room" name="room">
                         {% for room in rooms %}
-                            {% if room.status == '#9bf0ac' and room.state == 1 or room.name == reservation.room.name %}
+                            {% if room.status == '#9bf0ac' and room.state == 1 and reservation.room.type_room == room.type_room or room.name == reservation.room.name %}
                                 <option value="{{ room.id }}">
                                     {{ room.name }}
                                 </option>

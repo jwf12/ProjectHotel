@@ -24,13 +24,18 @@ class Room(models.Model):
     STATUS_COLOR=(
         ('#9bf0ac', 'clean'), # clean 
         ('#fffb8f', 'dirty'), # dirty 
-        ('#D47777', 'blocked',)  # blocked 
+        ('#D47777', 'blocked'),  # blocked 
     )
-
+    TYPES_ROOMS=(
+        ('1', 'Sgl'),
+        ('2', 'Dbl'),
+        ('3', 'Tpl'),
+        ('4', 'Qdpl'),
+    )
     
     max_capacity = models.CharField(max_length=205)
     name = models.CharField(max_length=205)
-    type_room = models.CharField(max_length=205)
+    type_room = models.CharField(max_length=4, choices=TYPES_ROOMS, default='1') 
     state = models.IntegerField(choices=STATE_STATE, default=1)
     status = models.CharField(max_length=7, choices=STATUS_COLOR, default='#9bf0ac')
     observations = models.TextField(null=True, blank=True)
@@ -44,9 +49,16 @@ class Reservation(models.Model):
             (2, 'check-in'),
             (3, 'check-out'),
         )
+    TYPES_ROOMS=(
+        ('1', 'Sgl'),
+        ('2', 'Dbl'),
+        ('3', 'Tpl'),
+        ('4', 'Qdpl'),
+    )
     
     passanger = models.ForeignKey(Passanger, on_delete=models.CASCADE)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, blank=True)
+    type_res = models.CharField(max_length=4, choices=TYPES_ROOMS, default='1')
     date_in = models.DateField()
     date_out = models.DateField()
     number = ShortUUIDField(length=6)

@@ -12,27 +12,36 @@
                 {% csrf_token %}
                 <div class="form-group m3">
 
-                    <label for="passanger">Passanger:</label>
-                    {{form.passanger}}
+                    <div class="form-group m3">
+                        <label for="passanger">Passanger:</label>
+                        {{form.passanger}}
+                    </div>
+
+                    <div class="form-group m3">
+                        <label for="type_res">Room type:</label>
+                        {{form.type_res}}
+                    </div>
+                    
+                    
                     <div class="container">
                         <label for="room">Rooms:</label>
-                        <select name="room" id="room">
-                            {% for room in rooms %}                    
-                                {% if room.status == '#9bf0ac' and room.state == 1 %}    
-                                        <option value="{{room.id}}">{{room.name}}</option>
-                                {% endif %}  
+                        <select name="room" id="room" required=false>
+                            {% for room in rooms %}                   
+                                  
+                                    <option value="{{room.id}}">{{room.name}}</option>
+                                                                   
                             {% endfor %}
                         </select>                
                     </div>
                     <div class="form-group">
 
                         <label for="date_in">Date in:</label>
-                        {% render_field form.date_in type='date' %}
+                        {% render_field form.date_in type='date'  min=today %}
                     </div>
 
                     <div class="form-group">
                         <label for="date_out">Date out:</label>
-                        {% render_field form.date_out type='date' %}
+                        {% render_field form.date_out type='date'  min=today %}
                     </div>
 
                     <div class="form-group">

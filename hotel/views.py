@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Passanger, Room, Reservation
 from utils.utils import room_change_satate
 from django.shortcuts import get_object_or_404
+from datetime import date
 
 
 #  Random id reservation: numbershortuuid.ShortUUID().random(length=6) 
@@ -97,10 +98,11 @@ class CreateReservation(generic.CreateView):
     model = Reservation
     context_object_name = 'reservations'
     template_name = 'reservation.html'
-    success_url = reverse_lazy('hotel:home')
+    success_url = reverse_lazy('hotel:home')    
     fields = [
         'passanger',
         'room',
+        'type_res',
         'date_in',
         'date_out',
         'number',
@@ -113,9 +115,11 @@ class CreateReservation(generic.CreateView):
         context = super().get_context_data(**kwargs)
         context['rooms'] = Room.objects.all()
         context['passangers'] = Passanger.objects.all()
+        context['today'] = date.today()
         return context
     
     def form_valid(self, form):
+        # Validating if a room is Occu for a specific date
         room = form.cleaned_data.get('room')
         date_in = form.cleaned_data.get('date_in')
         date_out = form.cleaned_data.get('date_out')
@@ -124,11 +128,11 @@ class CreateReservation(generic.CreateView):
             room = room,
             date_in__lte = date_in,
             date_out__gte = date_out,
-            status_res = status_res,
+            # status_res = status_res,   if not commented gives a wrong result
         )
 
         if reservation_check:
-            messages.error(self.request, 'Ya esxiste una reserva para esta hab')
+            messages.error(self.request, 'This room is already reserved')
             return super().form_invalid(form)
         
         return super().form_valid(form)
