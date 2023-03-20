@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import Home, CustomLoginView, SingUpView,  PassangerEditarView, ShowPassData, UpdateReservationView, ShowRooms, RoomEditarView, CreateReservation
+from .views import Home, CustomLoginView, SingUpView,  PassangerEditarView, ShowPassData, UpdateReservationView, ShowRooms, RoomEditarView, CreateReservation, CreatePasanger
 from utils.ticket import export_pdf
 from utils.utils import room_checkout, room_clean, room_blocked, room_dirty
 
@@ -22,6 +22,8 @@ urlpatterns = [
     path('reservations/update/<int:pk>', UpdateReservationView.as_view(), name='update_reserva'),
     #create reservation
     path('create-reservation/', CreateReservation.as_view(), name = 'create_reservation'),
+    #create passanger in reservation.html modal
+    path('create-passenger/', CreatePasanger.as_view(), name='create-passenger'),
     
     #Rooms
     path('rooms/', ShowRooms.as_view(), name='room'),
@@ -34,4 +36,4 @@ urlpatterns = [
     #utils
     path('pdf/<int:pk>/', export_pdf, name='export_pdf'),
     path('checkout/<int:pk>', room_checkout, name='checkout'),
-]
+    ]

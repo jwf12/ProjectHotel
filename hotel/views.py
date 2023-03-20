@@ -10,6 +10,8 @@ from .models import Passanger, Room, Reservation
 from utils.utils import room_change_satate
 from django.shortcuts import get_object_or_404
 from datetime import date
+from django.utils import timezone
+from datetime import timedelta
 
 
 #  Random id reservation: numbershortuuid.ShortUUID().random(length=6) 
@@ -141,6 +143,31 @@ class CreateReservation(generic.CreateView):
         return super().form_invalid(form)
 
 
+class CreatePasanger(generic.CreateView):
+    model = Passanger
+    template_name = 'reservation.html'
+    context_object_name = 'passangers'
+    success_url = reverse_lazy('hotel:home')
+    fields = [
+        'name',
+        'dni',
+        'tel',
+        'country',
+        'city',
+        'adress',
+        'email',
+        'birth_date',
+        'observations',
+
+    ]
+    def form_valid(self, form):
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        return super().form_invalid(form)
+
+
+
 # Login / register.
 class CustomLoginView(LoginView):
     def form_invalid(self, form):
@@ -164,3 +191,71 @@ class SingUpView(CreateView):
         return response
 
 
+
+
+
+
+
+
+
+
+# class RoomCalendarView(generic.TemplateView):
+#     template_name = 'calendar.html'
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+        
+#         # Obtener la fecha actual y el primer día del mes actual
+#         now = timezone.now()
+#         month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+
+#         # Calcular los días del mes actual
+#         days = []
+#         for i in range(31):
+#             day = month_start + timedelta(days=i)
+#             if day.month != now.month:
+#                 break
+#             days.append({
+#                 'day': day.day,
+#                 'weekday': day.strftime('%a'),
+#                 'date': day,
+#             })
+
+#         # Calcular la lista de años y meses
+#         years = range(now.year, now.year + 5)
+#         months = []
+#         for i in range(1, 13):
+#             month = month_start.replace(month=i)
+#             months.append({
+#                 'month': i,
+#                 'name': month.strftime('%B'),
+#             })
+
+#         # Obtener todas las habitaciones y las reservas para el mes actual
+#         rooms = Room.objects.all()
+#         reservations = Reservation.objects.filter(
+#             date_out__gte=month_start,
+#             date_in__lte=now.replace(day=31),
+#         ).select_related('room')
+
+#         # Calcular las reservas por habitación y día
+#         room_reservations = {}
+#         for room in rooms:
+#             room_reservations[str(room.pk)] = {}
+#             for day in days:
+#                 room_reservations[str(room.pk)][day['date'].strftime('%Y-%m-%d')] = 0
+
+#         for reservation in reservations:
+#             for day in days:
+#                 if reservation.date_in <= day['date'] and reservation.date_out > day['date']:
+#                     room_reservations[str(reservation.room.pk)][day['date'].strftime('%Y-%m-%d')] += reservation.amount_people
+
+#         context['room_reservations'] = room_reservations
+#         context['years'] = years
+#         context['months'] = months
+#         context['current_year'] = now.year
+#         context['days'] = days
+#         context['rooms'] = rooms
+#         context['room_reservations'] = room_reservations
+#         context['Room'] = Room
+#         return context
