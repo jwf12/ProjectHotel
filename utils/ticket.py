@@ -13,6 +13,7 @@ def export_pdf(request, pk):
     context = {
         # Pass info
         'name': passanger.passanger.name,
+        'Id': passanger.passanger.dni,
         'age': passanger.passanger.birth_date,
         'tel': passanger.passanger.tel,
         'email': passanger.passanger.email,

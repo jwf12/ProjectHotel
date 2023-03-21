@@ -15,17 +15,20 @@
 
             <form action="" method='POST'>
                 {% csrf_token %}
-                <button type='button' class='btn btn-primary mx-4 my-4 ' data-bs-toggle="modal" data-bs-target="#createPass">Create</button>
+                <button type='button' class='btn btn-primary mx-4 my-4 ' data-bs-toggle="modal" data-bs-target="#createPass">Create passenger</button>
             </form>
 
             <form action="{% url 'hotel:create_reservation' %}" method='POST' class='d-flex flex-wrap'>
                 {% csrf_token %}
                 <div class="form-group m3">
 
-                    <div class="pass-form form-group m3">
-                        <label for="passanger">Passanger:</label>
-                        {{form.passanger}}
-                    </div>
+                    <label for="passanger">passangers:</label>
+                    <input type="text" list="passe" name="passanger">
+                    <datalist id="passe">
+                        {% for passanger in passangers %}
+                        <option value="{{passanger.id}}">{{passanger.name}} - {{passanger.dni}}</option>
+                        {% endfor %}
+                    </datalist>  
 
                     <div class="form-group m3">
                         <label for="type_res">Room type:</label>
@@ -38,7 +41,7 @@
                         <select name="room" id="room" required=false>
                             {% for room in rooms %}                   
                                   
-                                    <option value="{{room.id}}">{{room.name}}</option>
+                                    <option value="{{room.id}}">{{room.name}} - {{room.get_state_display}}</option>
                                                                    
                             {% endfor %}
                         </select>                
