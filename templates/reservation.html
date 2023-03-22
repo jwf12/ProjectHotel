@@ -15,37 +15,40 @@
 
             <form action="" method='POST'>
                 {% csrf_token %}
-                <button type='button' class='btn btn-primary mx-4 my-4 ' data-bs-toggle="modal" data-bs-target="#createPass">Create passenger</button>
+                <button type='button' class='btn btn-primary my-4 ' data-bs-toggle="modal" data-bs-target="#createPass">Create passenger</button>
             </form>
 
             <form action="{% url 'hotel:create_reservation' %}" method='POST' class='d-flex flex-wrap'>
                 {% csrf_token %}
                 <div class="form-group m3">
-
-                    <label for="passanger">passangers:</label>
-                    <input type="text" list="passe" name="passanger">
+                    <h3 class="my-3">Create reservation:</h3>
+                    <div class="form-group">
+                    <label for="passanger">Passangers:</label>
+                    <input type="text" list="passe" name="passanger"  placeholder="Dni...">
                     <datalist id="passe">
                         {% for passanger in passangers %}
                         <option value="{{passanger.id}}">{{passanger.name}} - {{passanger.dni}}</option>
                         {% endfor %}
                     </datalist>  
+                    </div>
 
-                    <div class="form-group m3">
+                    <div class="form-group">
                         <label for="type_res">Room type:</label>
                         {{form.type_res}}
                     </div>
                     
                     
-                    <div class="container">
-                        <label for="room">Rooms:</label>
-                        <select name="room" id="room" required=false>
-                            {% for room in rooms %}                   
-                                  
-                                    <option value="{{room.id}}">{{room.name}} - {{room.get_state_display}}</option>
-                                                                   
-                            {% endfor %}
-                        </select>                
-                    </div>
+                    <div class="form-group">
+                    <label for="room">Rooms:</label>
+                    <select name="room" id="room" required=false>
+                        {% for room in rooms %}                   
+                                
+                                <option value="{{room.id}}">{{room.name}} - {{room.get_state_display}}</option>
+                                                                
+                        {% endfor %}
+                    </select>       
+                    </div>         
+                  
                     <div class="form-group">
 
                         <label for="date_in">Date in:</label>
@@ -167,5 +170,9 @@
       </div>
     </div>
 </div>
+
+
+
+
 
 {% endblock content %}
