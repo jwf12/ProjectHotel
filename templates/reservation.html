@@ -5,10 +5,10 @@
 
 {% block content %}
 
-{% comment %} {% include 'calendar.html' %} {% endcomment %}
 
 
 
+<!-- Create reservation -->
 <div class="container d-flex">
     <div class="col-3">
         <div class="row-6">
@@ -33,17 +33,18 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="type_res">Room type:</label>
+                        <label for="type_res" name="ola">Room type:</label>
                         {{form.type_res}}
                     </div>
                     
                     
                     <div class="form-group">
                     <label for="room">Rooms:</label>
-                    <select name="room" id="room" required=false>
+                    <select name="room" id="room" required=False>
+                        <option value="">----</option>
                         {% for room in rooms %}                   
                                 
-                                <option value="{{room.id}}">{{room.name}} - {{room.get_state_display}}</option>
+                                <option value="{{room.id}}">{{room.get_type_room_display}} | <strong>{{room.name}}</strong> | {{room.get_state_display}}</option>
                                                                 
                         {% endfor %}
                     </select>       
@@ -94,13 +95,6 @@
 </div>
 
 
-
-<script>
-    src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js">
-    $(document).ready(function() {
-        $('.pass-form').select2();
-    });
-</script>
 
 
 <!-- Modal: create Passanger-->
