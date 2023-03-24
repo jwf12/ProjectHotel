@@ -10,7 +10,7 @@ from .models import Passanger, Room, Reservation
 from utils.utils import room_change_satate
 from django.shortcuts import get_object_or_404
 from datetime import date
-from .forms import ReservationForm
+
 
 
 class Home(generic.ListView):

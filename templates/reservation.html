@@ -9,90 +9,96 @@
 
 
 <!-- Create reservation -->
-<div class="container d-flex">
-    <div class="col-3">
+<div class="container d-flex justify-content-between">
+    <div class="col-5">
         <div class="row-6">
-
-            <form action="" method='POST'>
-                {% csrf_token %}
-                <button type='button' class='btn btn-primary my-4 ' data-bs-toggle="modal" data-bs-target="#createPass">Create passenger</button>
-            </form>
-
-            <form action="{% url 'hotel:create_reservation' %}" method='POST' class='d-flex flex-wrap'>
-                {% csrf_token %}
-                <div class="form-group m3">
+            <div class="card ">
+                <div class="card-body">
+                    
                     <h3 class="my-3">Create reservation:</h3>
-                    <div class="form-group">
-                    <label for="passanger">Passangers:</label>
-                    <input type="text" list="passe" name="passanger"  placeholder="Dni...">
-                    <datalist id="passe">
-                        {% for passanger in passangers %}
-                        <option value="{{passanger.id}}">{{passanger.name}} - {{passanger.dni}}</option>
-                        {% endfor %}
-                    </datalist>  
-                    </div>
+                    <form action="" method='POST'>
+                        {% csrf_token %}
+                        <button type='button' class='btn btn-primary my-4 ' data-bs-toggle="modal" data-bs-target="#createPass">Create passenger</button>
+                    </form>
 
-                    <div class="form-group">
-                        <label for="type_res" name="ola">Room type:</label>
-                        {{form.type_res}}
-                    </div>
-                    
-                    
-                    <div class="form-group">
-                    <label for="room">Rooms:</label>
-                    <select name="room" id="room" required=False>
-                        <option value="">----</option>
-                        {% for room in rooms %}                   
-                                
-                                <option value="{{room.id}}">{{room.get_type_room_display}} | <strong>{{room.name}}</strong> | {{room.get_state_display}}</option>
-                                                                
-                        {% endfor %}
-                    </select>       
-                    </div>         
-                  
-                    <div class="form-group">
+                    <form action="{% url 'hotel:create_reservation' %}" method='POST' class='d-flex flex-wrap'>
+                        {% csrf_token %}
+                        <div class="form-group m3">
+                            
+                            <div class="form-group">
+                            <label for="passanger">Passangers:</label>
+                            <input type="text" list="passe" name="passanger"  placeholder="Dni...">
+                            <datalist id="passe">
+                                {% for passanger in passangers %}
+                                <option value="{{passanger.id}}">{{passanger.name}} - {{passanger.dni}}</option>
+                                {% endfor %}
+                            </datalist>  
+                            </div>
 
-                        <label for="date_in">Date in:</label>
-                        {% render_field form.date_in type='date'  min=today %}
-                    </div>
+                            <div class="form-group">
+                                <label for="type_res" name="ola">Room type:</label>
+                                {{form.type_res}}
+                            
 
-                    <div class="form-group">
-                        <label for="date_out">Date out:</label>
-                        {% render_field form.date_out type='date'  min=today %}
-                    </div>
+                                <label for="status_res">Status:</label>
+                                {{form.status_res}}
+                            </div>
+                            
+                            <div class="form-group">
+                            <label for="room">Rooms:</label>
+                            <select name="room" id="room" required=False>
+                                <option value="">----</option>
+                                {% for room in rooms %}                   
+                                        
+                                        <option value="{{room.id}}">{{room.get_type_room_display}} | <strong>{{room.name}}</strong> | {{room.get_state_display}}</option>
+                                                                        
+                                {% endfor %}
+                            </select>       
+                            </div>         
+                        
+                            <div class="form-group d-flex">
 
-                    <div class="form-group">
+                                <label for="date_in"class="mr-1">In:</label>
+                                {% render_field form.date_in type='date'  min=today %}
+                            
+                                <label for="date_out" class="mr-1 ml-2">Out:</label>
+                                {% render_field form.date_out type='date'  min=today %}
+                            </div>
 
-                        <label for="number">Number:</label>
-                        {{form.number}}
-                    </div>
+                            <div class="form-group">
 
-                    <div class="form-group">
+                                <label for="number" >Number:</label>
+                                {% render_field form.number class="w-25"%}
+                            
 
-                        <label for="amount_people">People:</label>
-                        {{form.amount_people}}
-                    </div>
+                                <label for="amount_people" class="ml-2">People:</label>
+                                {% render_field form.amount_people class="w-25"%}
+                            </div>
 
-                    <div class="form-group">
 
-                        <label for="status_res">Status:</label>
-                        {{form.status_res}}
-                    </div>
+                            <div class="form-group">
 
-                    <div class="form-group">
+                                <label for="observations">Observation:</label>
+                                {% render_field form.observations rows="2" %}                            
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Save</button>
 
-                        <label for="observations">Observation:</label>
-                        {{form.observations}}                            
-                    </div>
+                    </form>
                 </div>
-                
-                <button type="submit" class="btn btn-primary">Save</button>
-
-            </form>
-
+            </div>
         </div>
     </div>
+
+    <!-- CALENDAR-->
+    
+    <div class="col-md-7 mt-3">    
+        <div id='calendar'></div> 
+    </div> 
 </div>
+
+
 
 
 
