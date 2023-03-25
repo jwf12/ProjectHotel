@@ -128,7 +128,7 @@ class CreateReservation(generic.CreateView):
             room = room,
             date_in__lte = date_in,
             date_out__gte = date_out,
-            # status_res = status_res,   if not commented gives a wrong result
+             status_res = status_res,  
         )
 
         if reservation_check:
