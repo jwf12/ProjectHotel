@@ -7,12 +7,13 @@
  <!-- Room Cards --> 
 <div class="row m-4 ">
     <div class="col d-flex justify-content-center flex-wrap">
-        <!-- Upper Room Card --> 
+        
         {% for room in rooms %}
-        <div class="card col-3 m-3" style=" height: 280px;background-color:{{room.status}};">
+        <div class="card m-3" style=" min-height: 280px;background-color:{{room.status}}; max-width: 260px;">
             <div class="card-body">
+                <!-- Upper Room Card --> 
                 <div class="card-top d-flex border-bottom">
-                    <p class="card-state ">
+                    <p class="card-state mr-2">
                         {% if room.state == 1 %}
                             Free  
                         
@@ -38,7 +39,7 @@
                             <p class='room-type'>-Paxs: {{reservation.amount_people}}</p>
 
                             <!-- Check out button --> 
-                            <div class="container d-flex justify-content-start" style="width: 300px; margin-left: -15px;">
+                            <div class="container d-flex justify-content-start flex-wrap" style="width: 300px; margin-left: -15px;">
 
                                 <div class="checkout bg-danger rounded pt-1 text-center" >
                                     <a href="{% url 'hotel:checkout' pk=reservation.id %}"  class="mt-2 text-left"style="font-size:12px; font-weight:bold; color:#fff;">Check-out</a>
@@ -52,11 +53,11 @@
                                     </button>
                                 </form>
 
-                                <div class="">
-                                    <div class="m-2">
+                                
+                                <div class="m-2">
                                     <a href="{% url 'hotel:export_pdf' pk=reservation.id %}" target="_blank">Open PDF</a>
-                                    </div>
                                 </div>
+                               
 
                             </div>
                             
