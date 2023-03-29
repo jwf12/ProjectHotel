@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # apps
     'hotel',
     'widget_tweaks',
+    'django_filters'
 
 ]
 

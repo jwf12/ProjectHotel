@@ -5,6 +5,7 @@ from django.db.models import F
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from datetime import date
+from hotel.filters import SearchFilter
 
 # Funcion para cambiar el estado del room en caso que se le de check in a la reserva.
 
@@ -57,3 +58,12 @@ def reservations_check(room, date_in, date_out, status_res):
 
     if reservation:
         return 'ya existe'
+
+
+#Search View
+def searchView(request):
+    reservation = Reservation.objects.all()    
+    myFilter = SearchFilter(request.GET, queryset=reservation)
+    reservation = myFilter.qs
+    
+    return render(request, 'search.html', context={'myFilter':myFilter, 'reservations':reservation})

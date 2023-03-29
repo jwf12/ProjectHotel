@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from .views import Home, CustomLoginView, SingUpView,  PassangerEditarView, ShowPassData, UpdateReservationView, ShowRooms, RoomEditarView, CreateReservation, CreatePasanger
 from utils.ticket import export_pdf
-from utils.utils import room_checkout, room_clean, room_blocked, room_dirty
+from utils.utils import room_checkout, room_clean, room_blocked, room_dirty, searchView
 
 
 
@@ -36,4 +36,6 @@ urlpatterns = [
     #utils
     path('pdf/<int:pk>/', export_pdf, name='export_pdf'),
     path('checkout/<int:pk>', room_checkout, name='checkout'),
+    #search 
+    path('search/', searchView, name='search'),
     ]

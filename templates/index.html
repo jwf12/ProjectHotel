@@ -39,7 +39,7 @@
                             <p class='room-type'>-Paxs: {{reservation.amount_people}}</p>
 
                             <!-- Check out button --> 
-                            <div class="container d-flex justify-content-start flex-wrap" style="width: 300px; margin-left: -15px;">
+                            <div class="container d-flex justify-content-start flex-wrap" style="width: 300px; margin-left: -20px;">
 
                                 <div class="checkout bg-danger rounded pt-1 text-center" >
                                     <a href="{% url 'hotel:checkout' pk=reservation.id %}"  class="mt-2 text-left"style="font-size:12px; font-weight:bold; color:#fff;">Check-out</a>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="form-group m-3">
                     <label for="observations">Observation:</label>
-                    <textarea name="observations" id="" cols="30" rows="10">{{reservation.observations}}</textarea>
+                    <textarea name="observations" id=""  rows="10">{{reservation.observations}}</textarea>
                 </div>
 
                     
