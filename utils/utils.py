@@ -1,4 +1,4 @@
-from hotel.models import Reservation, Room
+from hotel.models import Reservation, Room, Passanger
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.db.models import F
@@ -59,11 +59,31 @@ def reservations_check(room, date_in, date_out, status_res):
     if reservation:
         return 'ya existe'
 
+#Check in button in search
+def check_in(request, pk):
+    reservation = Reservation.objects.get(pk=pk)
+    reservation.status_res = 2
+    reservation.save()
+    return HttpResponseRedirect(reverse_lazy('hotel:home'))
+#No-Show button in search
+def no_show(request, pk):
+    reservation = Reservation.objects.get(pk=pk)
+    reservation.status_res = 4
+    reservation.save()
+    return HttpResponseRedirect(reverse_lazy('hotel:search'))
+
 
 #Search View
 def searchView(request):
     reservation = Reservation.objects.all()    
     myFilter = SearchFilter(request.GET, queryset=reservation)
     reservation = myFilter.qs
+    room = Room.objects.all()
+    passangers=Passanger.objects.all()
     
-    return render(request, 'search.html', context={'myFilter':myFilter, 'reservations':reservation})
+    return render(request, 'search.html', context={
+                                                    'myFilter':myFilter,
+                                                    'reservations':reservation,
+                                                    'rooms':room,
+                                                    'passangers':passangers,
+                                                    })

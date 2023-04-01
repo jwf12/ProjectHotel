@@ -48,6 +48,7 @@ class Reservation(models.Model):
             (1, 'reserved'),
             (2, 'check-in'),
             (3, 'check-out'),
+            (4, 'no-show'),
         )
     TYPES_ROOMS=(
         ('1', 'Sgl'),

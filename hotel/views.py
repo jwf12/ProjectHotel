@@ -53,7 +53,6 @@ class RoomEditarView(generic.UpdateView):
 
 class PassangerEditarView(generic.UpdateView):
     model = Passanger
-    success_url = reverse_lazy('hotel:home')
     fields = [
         'name',
         'dni',
@@ -64,7 +63,6 @@ class PassangerEditarView(generic.UpdateView):
         'email',
         'birth_date',
         'observations',
-
     ]
 
     def form_valid(self, form):
@@ -72,12 +70,13 @@ class PassangerEditarView(generic.UpdateView):
     
     def form_invalid(self,form):
         return super().form_invalid(form)
+    def get_success_url(self):
+        return reverse_lazy('hotel:home') if self.template_name == 'index.html' else reverse_lazy('hotel:search')
 
 
 #modify reservation. 
 class UpdateReservationView(generic.UpdateView):
-    model = Reservation
-    success_url = reverse_lazy('hotel:home')
+    model = Reservation    
     fields = [
             'room',
             'date_in',
@@ -91,13 +90,16 @@ class UpdateReservationView(generic.UpdateView):
     
     def form_invalid(self,form):
         return super().form_invalid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy('hotel:home') if self.template_name == 'index.html' else reverse_lazy('hotel:search')
 
 #Create a reservation.
 class CreateReservation(generic.CreateView):
     model = Reservation   
     context_object_name = 'reservations'
     template_name = 'reservation.html'
-    success_url = reverse_lazy('hotel:home')    
+    success_url = reverse_lazy('hotel:create_reservation')    
 
     fields = [
         'passanger',
@@ -164,7 +166,6 @@ class CreatePasanger(generic.CreateView):
     
     def form_invalid(self, form):
         return super().form_invalid(form)
-
 
 
 # Login / register.

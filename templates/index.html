@@ -100,7 +100,7 @@
                         {% endfor %}
                     </select>
             </div>
-
+        
                 <div class="form-group m-3">
                     <label for="date_in">Date in:</label>
                     <input type="date" class="form-control" id="date_in" name="date_in" value={{reservation.date_in|date:'Y-m-d'}} >
@@ -109,6 +109,7 @@
                     <label for="date_out">Date out:</label>
                     <input type="date" class="form-control" id="date_out" name="date_out" value={{reservation.date_out|date:'Y-m-d'}} >
                 </div>
+
                 <div class="form-group m-3">
                     <label for="amount_people">Amount people:</label>
                     <input type="number" class="form-control" id="amount_people" name="amount_people" value={{reservation.amount_people}} >

@@ -1,13 +1,14 @@
 from django import template
 import django_filters
+from .models import Reservation
+
 register = template.Library()
 
 @register.filter
 def get_item(value, arg):
     return value.get(arg)
 
-from .models import Reservation
-import django_filters
+
 
 
 class SearchFilter(django_filters.FilterSet):    

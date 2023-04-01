@@ -2,19 +2,187 @@
 {% load widget_tweaks %}
 
 {% block content %}
-<div>
+<div class="content">
+    <div class="row">     
+        <div class="col">
+            <div class="d-flex justify-content-center">
+                <form action="{% url 'hotel:search'%}" method="get">
+                    <table class="text-center">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <label for="passanger">Passangers:</label>
+                                </th>
+                                <th>
+                                    <label for="room">Room:</label>
+                                </th>
+                                <th>
+                                    <label for="date_in">Date in:</label>
+                                </th>
+                                <th>
+                                    <label for="date_out">Date out:</label>
+                                </th>
+                                <th>
+                                    <label for="number">Res Num:</label>
+                                </th>
+                                <th>
+                                    <label for="status_res">Status:</label>
+                                </th>
+                            </tr>
+                            
+                        </thead>
 
-    <form action="{% url 'hotel:search'%}" method="get">
-        {% render_field myFilter.form.passanger type='text'%}
-        {% render_field myFilter.form.date_in type='date'%}
-        
-        <button type="submit" class="btn btn-warning ml-4" data-bs-toggle="modal" data-bs-target="#updateModal_{{reservation.id}}">
-            Search
-        </button>
-    </form>
-    
-    {% for reservation in reservations %}
-    <p>{{reservation.passanger}} - {{reservation.number}} - {{reservation.room}} - in: {{reservation.date_in}} - out: {{reservation.date_out}}</p>
-    {% endfor %}
+                        <tbody>
+                            <td>
+                                <input type="text" list="passe" name="passanger"  placeholder="Dni...">
+                                <datalist id="passe">
+                                    {% for passanger in passangers %}
+                                    <option value="{{passanger.id}}">{{passanger.name}} - {{passanger.dni}}</option>
+                                    {% endfor %}
+                                </datalist>  
+                            </td>
+                            <td>
+                                {{myFilter.form.room}}
+                            </td>
+                            <td>
+                                {%render_field myFilter.form.date_in type="date" %}
+                            </td>
+                            <td>
+                                {%render_field myFilter.form.date_out type="date" %}
+                            </td>
+                            <td>
+                                {{myFilter.form.number}}
+                            </td>
+                            <td>
+                                {{myFilter.form.status_res}}
+                            </td>
+                        </tbody>
+                    </table>                      
+                        
+                    <div class="form-group text-center mt-4">
+                        <button type="submit" class="btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#updateModal_{{reservation.id}}">
+                            Search
+                        </button>
+                        <a href="{% url 'hotel:search' %}"><button type="button" class="btn btn-warning ml-4">Reset</button> </a>
+                    </div>
+                </form>
+            </div>
+            
+            
+            <table class="table table-bordered mt-3">
+                <thead>
+                <tr>
+                    <th>Passanger:</th> 
+                    <th>Rve Num:</th>
+                    <th>Room:</th>
+                    <th>Room type:</th>
+                    <th>Date in:</th>
+                    <th>Date out:</th>
+                    <th>Status res:</th>
+                    <th>Pdf:</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% if request.GET %}
+                        {% for reservation in reservations %}
+                            <tr>
+                                <td><a href="{% url 'hotel:passanger-data' pk=reservation.passanger.id %}">{{reservation.passanger}}</a></td>
+                                <td class="text-center py-2">
+                                    <div class="mt-2">
+                                        {{reservation.number}}
+                                        <form action="{% url 'hotel:update_reserva' pk=reservation.id %}" method="post" class="text-start">
+                                            {% csrf_token %}
+                                            <button type="button" class="btn btn-warning ml-4 text-center" data-bs-toggle="modal" data-bs-target="#updateModal_{{reservation.id}}">
+                                                Edit
+                                            </button>
+                                        </form> 
+                                    </div>
+                                </td>
+                                <td>{{reservation.room}}</td>
+                                <td>{{reservation.get_type_res_display}}</td>
+                                <td>{{reservation.date_in}}</td>
+                                <td>{{reservation.date_out}}</td>
+                                <td>{{reservation.get_status_res_display}}</td>
+                                <td>
+                                    {% if reservation.status_res == 1 %}
+                                    <div class="checkout bg-success rounded pt-1 text-center" >
+                                        <a href="{% url 'hotel:checkin' pk=reservation.id %}"  class=" text-left"style="font-size:12px; font-weight:bold; color:#fff;">Check-in</a>
+                                    </div>
+                                    <div class="checkout bg-danger rounded pt-1 text-center mt-2" >
+                                        <a href="{% url 'hotel:noshow' pk=reservation.id %}"  class="text-left"style="font-size:12px; font-weight:bold; color:#fff;">No-show</a>
+                                    </div>
+                                    {% endif %}
+                                    <div class="m-2">
+                                        <a href="{% url 'hotel:export_pdf' pk=reservation.id %}" target="_blank">Open PDF</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>                                 
+            </table>
+        </div>   
+    </div>
 </div>
+
+
+<!--Reservation modal upate -->
+{% for reservation in reservations %}
+<div class="modal fade" id="updateModal_{{reservation.id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{reservation.id}}" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="bi bi-journal-bookmark"></i> Editar Reservation:</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+    
+        <form action="{% url 'hotel:update_reserva' reservation.id %}" method = 'POST'>
+            {% csrf_token %}
+            <div class="modal-body">           
+            
+            <div class="form-group m3">
+                <label for="room">Room:</label>
+                    <select class="form-control" id="room" name="room">
+                        {% for room in rooms %}
+                            
+                                <option value="{{ room.id }}">
+                                    {{ room.name }}
+                                </option>
+    
+                        {% endfor %}
+                    </select>
+            </div>
+                <div class="form-group m-3">
+                    <label for="date_in">Date in:</label>
+                    <input type="date" class="form-control" id="date_in" name="date_in" value={{reservation.date_in|date:'Y-m-d'}} >
+                </div>
+                <div class="form-group m-3">
+                    <label for="date_out">Date out:</label>
+                    <input type="date" class="form-control" id="date_out" name="date_out" value={{reservation.date_out|date:'Y-m-d'}} >
+                </div>
+                <div class="form-group m-3">
+                    <label for="amount_people">Amount people:</label>
+                    <input type="number" class="form-control" id="amount_people" name="amount_people" value={{reservation.amount_people}} >
+                </div>
+                <div class="form-group m-3">
+                    <label for="observations">Observation:</label>
+                    <textarea name="observations" id=""  rows="10">{{reservation.observations}}</textarea>
+                </div>
+
+                    
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+
+        </form>
+        
+      </div>
+    </div>
+</div>
+{% endfor %}
+
 {% endblock content %}
