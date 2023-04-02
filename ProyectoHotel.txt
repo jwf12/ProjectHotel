@@ -1,3 +1,4 @@
+No olvidar installar GTK3
 Modelos:
 
 User

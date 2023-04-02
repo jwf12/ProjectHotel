@@ -70,6 +70,7 @@ class PassangerEditarView(generic.UpdateView):
     
     def form_invalid(self,form):
         return super().form_invalid(form)
+    
     def get_success_url(self):
         return reverse_lazy('hotel:home') if self.template_name == 'index.html' else reverse_lazy('hotel:search')
 
@@ -148,7 +149,7 @@ class CreatePasanger(generic.CreateView):
     model = Passanger
     template_name = 'reservation.html'
     context_object_name = 'passangers'
-    success_url = reverse_lazy('hotel:home')
+    success_url = reverse_lazy('hotel:create_reservation')
     fields = [
         'name',
         'dni',
