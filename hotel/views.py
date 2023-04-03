@@ -75,8 +75,6 @@ class PassangerEditarView(generic.UpdateView):
         return super().form_invalid(form)
     
 
-
-
 #modify reservation. 
 class UpdateReservationView(generic.UpdateView):
     model = Reservation    
@@ -94,7 +92,26 @@ class UpdateReservationView(generic.UpdateView):
     
     def form_invalid(self,form):
         return super().form_invalid(form)
+
+
+#modify reservation Search. 
+class UpdateReservationViewSearch(generic.UpdateView):
+    model = Reservation    
+    success_url = reverse_lazy('hotel:search')
+    fields = [
+            'room',
+            'date_in',
+            'date_out',
+            'amount_people',
+            'observations',
+    ]
+
+    def form_valid(self, form):
+        return super().form_valid(form)
     
+    def form_invalid(self,form):
+        return super().form_invalid(form)
+
 
 #Create a reservation.
 class CreateReservation(generic.CreateView):
@@ -121,7 +138,7 @@ class CreateReservation(generic.CreateView):
             room = room,
             date_in__lte = date_in,
             date_out__gte = date_out,
-             status_res = status_res,  
+            status_res = status_res,  
         )
 
         if reservation_check:

@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import Home, CustomLoginView, SingUpView,  PassangerEditarView, ShowPassData, UpdateReservationView, ShowRooms, RoomEditarView, CreateReservation, CreatePasanger
+from .views import Home, CustomLoginView, SingUpView,  PassangerEditarView, ShowPassData, UpdateReservationView, ShowRooms, RoomEditarView, CreateReservation, CreatePasanger,UpdateReservationViewSearch
 from utils.ticket import export_pdf
 from utils.utils import room_checkout, room_clean, room_blocked, room_dirty, searchView, check_in, no_show
 
@@ -39,5 +39,6 @@ urlpatterns = [
     #search 
     path('search/', searchView, name='search'),
     path('search/check_in/<int:pk>', check_in, name='checkin'),
-    path('search/no_show/<int:pk>', no_show, name='noshow')
+    path('search/no_show/<int:pk>', no_show, name='noshow'),
+    path('search_update/<int:pk>', UpdateReservationViewSearch.as_view(), name='search_update')
     ]

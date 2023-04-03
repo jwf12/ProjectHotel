@@ -90,7 +90,7 @@
                                 <td class="text-center py-2">
                                     <div class="mt-2">
                                         {{reservation.number}}
-                                        <form action="{% url 'hotel:update_reserva' pk=reservation.id %}" method="post" class="text-start">
+                                        <form action="{% url 'hotel:search_update' pk=reservation.id %}" method="post" class="text-start">
                                             {% csrf_token %}
                                             <button type="button" class="btn btn-warning ml-4 text-center" data-bs-toggle="modal" data-bs-target="#updateModal_{{reservation.id}}">
                                                 Edit
@@ -136,7 +136,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
     
-        <form action="{% url 'hotel:update_reserva' reservation.id %}" method = 'POST'>
+        <form action="{% url 'hotel:search_update' reservation.id %}" method = 'POST'>
             {% csrf_token %}
             <div class="modal-body">           
             

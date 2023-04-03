@@ -48,10 +48,8 @@
                             <label for="room">Rooms:</label>
                             <select name="room" id="room">
                                 <option value="">----</option>
-                                {% for room in rooms %}                   
-                                        
-                                        <option value="{{room.id}}">{{room.get_type_room_display}} | <strong>{{room.name}}</strong> | {{room.get_state_display}} | {{room.get_status_display}}</option>
-                                                                        
+                                {% for room in rooms %}               
+                                    <option value="{{room.id}}">{{room.get_type_room_display}} | <strong>{{room.name}}</strong> | {{room.get_state_display}} | {{room.get_status_display}}</option>                       
                                 {% endfor %}
                             </select>       
                             </div>         

@@ -67,5 +67,3 @@ class Reservation(models.Model):
     status_res = models.IntegerField(choices=STATUS_RESERVATION, default = 'not-reserved')
     observations = models.TextField()
 
-
-
