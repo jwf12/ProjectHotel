@@ -73,7 +73,7 @@
                 <thead>
                 <tr>
                     <th>Passanger:</th> 
-                    <th>Rve Num:</th>
+                    <th>Res Num:</th>
                     <th>Room:</th>
                     <th>Room type:</th>
                     <th>Date in:</th>
@@ -144,11 +144,11 @@
                 <label for="room">Room:</label>
                     <select class="form-control" id="room" name="room">
                         {% for room in rooms %}
-                            
+                            {% if room.status == '#9bf0ac' and room.state == 1 %}
                                 <option value="{{ room.id }}">
-                                    {{ room.name }}
+                                  Room:  {{ room.name }} - Type: {{room.get_type_room_display}}
                                 </option>
-    
+                            {% endif %}
                         {% endfor %}
                     </select>
             </div>

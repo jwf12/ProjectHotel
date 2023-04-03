@@ -10,6 +10,7 @@ from .models import Passanger, Room, Reservation
 from utils.utils import room_change_satate
 from django.shortcuts import get_object_or_404
 from datetime import date
+from .forms import ReservationForm
 
 
 
@@ -53,6 +54,8 @@ class RoomEditarView(generic.UpdateView):
 
 class PassangerEditarView(generic.UpdateView):
     model = Passanger
+    template_name = 'index.html'
+    success_url = reverse_lazy('hotel:home')
     fields = [
         'name',
         'dni',
@@ -71,13 +74,13 @@ class PassangerEditarView(generic.UpdateView):
     def form_invalid(self,form):
         return super().form_invalid(form)
     
-    def get_success_url(self):
-        return reverse_lazy('hotel:home') if self.template_name == 'index.html' else reverse_lazy('hotel:search')
+
 
 
 #modify reservation. 
 class UpdateReservationView(generic.UpdateView):
     model = Reservation    
+    success_url = reverse_lazy('hotel:home')
     fields = [
             'room',
             'date_in',
@@ -92,27 +95,14 @@ class UpdateReservationView(generic.UpdateView):
     def form_invalid(self,form):
         return super().form_invalid(form)
     
-    def get_success_url(self):
-        return reverse_lazy('hotel:home') if self.template_name == 'index.html' else reverse_lazy('hotel:search')
 
 #Create a reservation.
 class CreateReservation(generic.CreateView):
     model = Reservation   
     context_object_name = 'reservations'
     template_name = 'reservation.html'
-    success_url = reverse_lazy('hotel:create_reservation')    
-
-    fields = [
-        'passanger',
-        'room',
-        'type_res',
-        'date_in',
-        'date_out',
-        'number',
-        'amount_people',
-        'status_res',
-        'observations',
-    ]   
+    form_class = ReservationForm
+    success_url = reverse_lazy('hotel:create_reservation')   
    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -58,7 +58,7 @@ class Reservation(models.Model):
     )
     
     passanger = models.ForeignKey(Passanger, on_delete=models.CASCADE)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, blank=True)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, blank=True,null=True, default=None)
     type_res = models.CharField(max_length=4, choices=TYPES_ROOMS, default='1')
     date_in = models.DateField()
     date_out = models.DateField()

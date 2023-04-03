@@ -24,8 +24,8 @@ def export_pdf(request, pk):
         'out': passanger.date_out,
         'people': passanger.amount_people,
         'obs': passanger.observations,
-        'room': passanger.room.name,
-        'room_type': passanger.room.type_room,
+        'room': passanger.room.name if passanger.room else '',
+        'room_type': passanger.get_type_res_display,
 
         # Otros
         'current_date': datetime.now(),
