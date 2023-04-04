@@ -14,6 +14,7 @@ from .forms import ReservationForm
 
 
 
+
 class Home(generic.ListView):
     queryset = Room.objects.all().order_by('id')
     template_name = 'index.html'

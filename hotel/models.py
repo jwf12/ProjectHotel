@@ -16,6 +16,7 @@ class Passanger(models.Model):
     def __str__(self):
         return self.name
 
+
 class Room(models.Model):
     STATE_STATE=(  
         (1, 'free'),
@@ -42,6 +43,7 @@ class Room(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Reservation(models.Model):
     STATUS_RESERVATION=(
