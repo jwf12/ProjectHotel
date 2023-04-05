@@ -13,6 +13,18 @@ from datetime import date
 from .forms import ReservationForm
 
 
+class Base(generic.ListView):
+    model = Room
+    template_name = 'base.html'
+    context_object_name = 'room'
+
+    def get_queryset(self):
+        return super().get_queryset().values_list('type_room', flat=True).distinct()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['rooms'] = self.get_queryset()
+        return context
 
 
 class Home(generic.ListView):
@@ -27,18 +39,21 @@ class Home(generic.ListView):
         return context
 
 
+#Shows passenger info in 'passanger.html'
 class ShowPassData(generic.DetailView):
     model = Passanger
     template_name = 'passanger.html'
     context_object_name = 'passan'
 
 
+#Show rooms in 'index.html'
 class ShowRooms(generic.ListView):
     queryset = Room.objects.all().order_by('id')
     template_name = 'rooms.html'
     context_object_name = 'rooms'
 
 
+#Edit Room
 class RoomEditarView(generic.UpdateView):
     model = Room
     success_url = reverse_lazy('hotel:room')
@@ -51,8 +66,9 @@ class RoomEditarView(generic.UpdateView):
     
     def form_invalid(self,form):
         return super().form_invalid(form)
-    
 
+
+#Edit Passenger
 class PassangerEditarView(generic.UpdateView):
     model = Passanger
     template_name = 'index.html'
@@ -177,13 +193,14 @@ class CreatePasanger(generic.CreateView):
         return super().form_invalid(form)
 
 
-# Login / register.
+# Login 
 class CustomLoginView(LoginView):
     def form_invalid(self, form):
         messages.error(self.request, 'Credenciales no validas.')        
         return super().form_invalid(form)
 
 
+# register.
 class SingUpView(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy('hotel:login')
