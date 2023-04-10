@@ -1,4 +1,4 @@
-# To-Do-List
+# ProjectHotel
 
 Software de gestion hotelera hecha con Django y PostgreSQL.
 
