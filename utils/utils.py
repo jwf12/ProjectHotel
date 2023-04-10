@@ -8,7 +8,6 @@ from datetime import date
 from hotel.filters import SearchFilter
 
 # Funcion para cambiar el estado del room en caso que se le de check in a la reserva.
-
 def room_change_satate():
     reserved_rooms = set(Reservation.objects.filter(status_res=2).values_list('room__id', flat=True))
     all_rooms = Room.objects.all()
@@ -37,14 +36,14 @@ def room_clean(request, pk):
     room.save()
     return HttpResponseRedirect(reverse_lazy('hotel:room'))
 
-
+#Status buttons used in rooms.html
 def room_blocked(request, pk):
     room = Room.objects.get(pk=pk)
     room.status = '#D47777'
     room.save()
     return HttpResponseRedirect(reverse_lazy('hotel:room'))
 
-
+#Status buttons used in rooms.html
 def room_dirty(request, pk):
     room = Room.objects.get(pk=pk)
     room.status = '#fffb8f'
@@ -73,7 +72,7 @@ def no_show(request, pk):
     return HttpResponseRedirect(reverse_lazy('hotel:search'))
 
 
-#Search View
+#Search View filter
 def searchView(request):
     reservation = Reservation.objects.all()    
     myFilter = SearchFilter(request.GET, queryset=reservation)
