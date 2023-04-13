@@ -10,7 +10,7 @@
 
 <!-- Create reservation -->
 <div class="container d-flex justify-content-between flex-wrap">
-    <div class="col">
+    <div class="col mb-5">
         <div class="row-6">
             <div class="card ">
                 <div class="card-body">
@@ -23,7 +23,9 @@
 
                     <form action="{% url 'hotel:create_reservation' %}" method='POST' class='d-flex flex-wrap'>
                         {% csrf_token %}
-                        <div class="form-group m3">
+
+                        <!--Query LG screens -->
+                        <div class="form-group m3 d-none d-lg-block">
                             
                             <div class="form-group">
                             <label for="passanger">Passangers:</label>
@@ -80,6 +82,64 @@
                             </div>
                         </div>
                         
+                        <!--Query MD screens -->
+                         <div class="form-group m3 d-block d-lg-none">
+                            
+                            <div class="form-group">
+                            <label for="passanger">Passangers:</label>
+                            <input type="text" list="passe" name="passanger"  placeholder="Dni..."class="w-50">
+                            <datalist id="passe">
+                                {% for passanger in passangers %}
+                                <option value="{{passanger.id}}">{{passanger.name}} - {{passanger.dni}}</option>
+                                {% endfor %}
+                            </datalist>  
+                            </div>
+
+                            <div class="form-group">
+                                <label for="type_res" name="type_res">Type:</label>
+                                {{form.type_res}}
+                            
+
+                                <label for="status_res">Status:</label>
+                                {{form.status_res}}
+                            </div>
+                            
+                            <div class="form-group">
+                            <label for="room">Rooms:</label>
+                            <select name="room" id="room">
+                                <option value="" class="w-25">----</option>
+                                {% for room in rooms %}               
+                                    <option value="{{room.id}}">{{room.get_type_room_display}} | <strong>{{room.name}}</strong> | {{room.get_state_display}} | {{room.get_status_display}}</option>                       
+                                {% endfor %}
+                            </select>       
+                            </div>         
+                        
+                            <div class="form-group d-none d-md-block d-flex w=25">
+                                <label for="date_in" class="mr-1">In:</label>
+                                {% render_field form.date_in type='date'  min=today class="w-25" %}
+                                                          
+                                <label for="date_out" class="mr-1 ml-2">Out:</label>
+                                {% render_field form.date_out type='date'  min=today class="w-25" %}
+                            </div>                     
+
+                            <div class="form-group">
+
+                                <label for="number" >Res:</label>
+                                {% render_field form.number class="w-25"%}
+                            
+
+                                <label for="amount_people" class="ml-2">Ppls:</label>
+                                {% render_field form.amount_people class="w-25"%}
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="observations">Observation:</label>
+                                {% render_field form.observations rows="2" cols="20"%}                            
+                            </div>
+                        </div>
+                        
                         <button type="submit" class="btn btn-primary">Reserve</button>
 
                     </form>
@@ -91,7 +151,7 @@
 
     <!-- CALENDAR-->
     
-    <div class="col">            
+    <div class="col ">            
         <div id='calendar'></div> 
     </div> 
 </div>
