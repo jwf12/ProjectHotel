@@ -25,7 +25,7 @@
                         {% csrf_token %}
 
                         <!--Query LG screens -->
-                        <div class="form-group m3 d-none d-lg-block">
+                        <div class="form-group m3">
                             
                             <div class="form-group">
                             <label for="passanger">Passangers:</label>
@@ -83,7 +83,7 @@
                         </div>
                         
                         <!--Query MD screens -->
-                         <div class="form-group m3 d-block d-lg-none">
+                         <!-- <div class="form-group m3 d-block d-lg-none">
                             
                             <div class="form-group">
                             <label for="passanger">Passangers:</label>
@@ -139,7 +139,7 @@
                                 {% render_field form.observations rows="2" cols="20"%}                            
                             </div>
                         </div>
-                        
+                         -->
                         <button type="submit" class="btn btn-primary">Reserve</button>
 
                     </form>

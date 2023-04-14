@@ -143,6 +143,7 @@
             <div class="form-group m3">
                 <label for="room">Room:</label>
                     <select class="form-control" id="room" name="room">
+                        <option value="">----</option>
                         {% for room in rooms %}
                             {% if room.status == '#9bf0ac' and room.state == 1 %}
                                 <option value="{{ room.id }}">

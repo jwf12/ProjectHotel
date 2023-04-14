@@ -86,7 +86,9 @@ class PassangerEditarView(generic.UpdateView):
     ]
 
     def form_valid(self, form):
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        messages.success(self.request, 'Info edited')
+        return response
     
     def form_invalid(self,form):
         return super().form_invalid(form)
@@ -105,13 +107,15 @@ class UpdateReservationView(generic.UpdateView):
     ]
 
     def form_valid(self, form):
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        messages.success(self.request, 'Reservation edited')
+        return response
     
     def form_invalid(self,form):
         return super().form_invalid(form)
 
 
-#modify reservation Search. 
+#modify reservation from Search. 
 class UpdateReservationViewSearch(generic.UpdateView):
     model = Reservation    
     success_url = reverse_lazy('hotel:search')
@@ -124,7 +128,9 @@ class UpdateReservationViewSearch(generic.UpdateView):
     ]
 
     def form_valid(self, form):
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        messages.success(self.request, 'Reservation edited')
+        return response
     
     def form_invalid(self,form):
         return super().form_invalid(form)
@@ -146,23 +152,25 @@ class CreateReservation(generic.CreateView):
         return context
     
     def form_valid(self, form):
-        # Validating if a room is Occu for a specific date
-        room = form.cleaned_data.get('room')
-        date_in = form.cleaned_data.get('date_in')
-        date_out = form.cleaned_data.get('date_out')
-        status_res = form.cleaned_data.get('status_res')
-        reservation_check = Reservation.objects.filter( 
-            room = room,
-            date_in__lte = date_in,
-            date_out__gte = date_out,
-            status_res = status_res,  
-        )
+        response = super().form_valid(form)
+        # # Validating if a room is Occu for a specific date
+        # room = form.cleaned_data.get('room')
+        # date_in = form.cleaned_data.get('date_in')
+        # date_out = form.cleaned_data.get('date_out')
+        # status_res = form.cleaned_data.get('status_res')
+        # reservation_check = Reservation.objects.filter( 
+        #     room = room,
+        #     date_in__lte = date_in,
+        #     date_out__gte = date_out,
+        #     status_res = status_res,  
+        # )
 
-        if reservation_check:
-            messages.error(self.request, 'This room is already reserved')
-            return super().form_invalid(form)
+        # if reservation_check:
+        #     messages.error(self.request, 'This room is already reserved')
+        #     return super().form_invalid(form)
         
-        return super().form_valid(form)
+        messages.success(self.request, 'Reservation created')
+        return response
     
     def form_invalid(self,form):
         return super().form_invalid(form)
@@ -187,7 +195,9 @@ class CreatePasanger(generic.CreateView):
 
     ]
     def form_valid(self, form):
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        messages.success(self.request, 'Passenger created')
+        return response
     
     def form_invalid(self, form):
         return super().form_invalid(form)

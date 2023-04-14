@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from datetime import date
 from hotel.filters import SearchFilter
+from django.contrib import messages
 
 # Funcion para cambiar el estado del room en caso que se le de check in a la reserva.
 def room_change_satate():
@@ -26,6 +27,7 @@ def room_checkout(request, pk):
     reservation = Reservation.objects.get(pk=pk)
     reservation.status_res = 3
     reservation.save()
+    messages.success(request, 'Reservation check-out')
     return HttpResponseRedirect(reverse_lazy('hotel:home'))
 
 
@@ -63,12 +65,15 @@ def check_in(request, pk):
     reservation = Reservation.objects.get(pk=pk)
     reservation.status_res = 2
     reservation.save()
+    messages.success(request, 'Reservation check-in')
     return HttpResponseRedirect(reverse_lazy('hotel:home'))
+
 #No-Show button in search
 def no_show(request, pk):
     reservation = Reservation.objects.get(pk=pk)
     reservation.status_res = 4
     reservation.save()
+    messages.success(request, 'Reservation No-show')
     return HttpResponseRedirect(reverse_lazy('hotel:search'))
 
 
