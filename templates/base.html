@@ -203,15 +203,7 @@
           initialView: 'dayGridMonth',
           initialDate: '2023-04-05',
           events: [             
-              {% for room in rooms %}
-                {         
-                  title: "{{room.get_type_room_display}}: {{room.name}}",
-                  start: '2023-04-05',
-                  end: '2023-04-20',
-                  display: 'list-item'
-
-                },
-              {% endfor %}
+              
 
             ]
                 
