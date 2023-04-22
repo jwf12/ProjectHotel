@@ -153,11 +153,11 @@ class CreateReservation(generic.CreateView):
     
     def form_valid(self, form):
         response = super().form_valid(form)
-        # # Validating if a room is Occu for a specific date
-        # room = form.cleaned_data.get('room')
-        # date_in = form.cleaned_data.get('date_in')
-        # date_out = form.cleaned_data.get('date_out')
-        # status_res = form.cleaned_data.get('status_res')
+        # Validating if a room is Occu for a specific date
+        room = form.cleaned_data.get('room')
+        date_in = form.cleaned_data.get('date_in')
+        date_out = form.cleaned_data.get('date_out')
+        status_res = form.cleaned_data.get('status_res')
         # reservation_check = Reservation.objects.filter( 
         #     room = room,
         #     date_in__lte = date_in,
