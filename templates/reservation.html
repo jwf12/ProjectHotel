@@ -38,12 +38,12 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="type_res" name="type_res">Room type:</label>
+                                <label for="type_res" name="type_res">Rm type:</label>
                                 {{form.type_res}}
                             
 
                                 <label for="status_res">Status:</label>
-                                {{form.status_res}}
+                                {% render_field form.status_res style='max-width: 80px;'%} 
                             </div>
                             
                             <div class="form-group">
@@ -58,10 +58,10 @@
                         
                             <div class="form-group d-none d-md-block d-flex">
                                 <label for="date_in" class="mr-1">In:</label>
-                                {% render_field form.date_in type='date'  min=today %}
+                                {% render_field form.date_in type='date'  min=today style='max-width: 110px;' %}
                                                           
                                 <label for="date_out" class="mr-1 ml-2">Out:</label>
-                                {% render_field form.date_out type='date'  min=today %}
+                                {% render_field form.date_out type='date'  min=today style='max-width: 110px;' %}
                             </div>                     
 
                             <div class="form-group">
@@ -76,9 +76,8 @@
 
 
                             <div class="form-group">
-
                                 <label for="observations">Observation:</label>
-                                {% render_field form.observations rows="2" %}                            
+                                {% render_field form.observations rows="2" style='max-width: 250px;'%}                            
                             </div>
                         </div>
                         
