@@ -4,14 +4,14 @@
 {% block content %}
 <div class="content">
     <div class="row">     
-        <div class="col">
-            <div class="table-responsive overflow-x-auto d-flex justify-content-center">
+        <div class="col-12">
+            <div class="table-responsive d-flex justify-content-center">
                 <form action="{% url 'hotel:search'%}" method="get">
-                    <table class="table-responsive text-center">
+                    <table class="text-center">
                         <thead>
                             <tr>
                                 <th>
-                                    <label for="passanger">Passangers:</label>
+                                    <label for="passanger">Passanger:</label>
                                 </th>
                                 <th>
                                     <label for="room">Room:</label>
@@ -34,7 +34,7 @@
 
                         <tbody>
                             <td>
-                                <input type="text" list="passe" name="passanger"  placeholder="Dni...">
+                                <input type="text" class="mr-2" list="passe" name="passanger"  placeholder="Dni..." style='max-width: 80px;'>
                                 <datalist id="passe">
                                     {% for passanger in passangers %}
                                     <option value="{{passanger.id}}">{{passanger.name}} - {{passanger.dni}}</option>
@@ -42,16 +42,16 @@
                                 </datalist>  
                             </td>
                             <td>
-                                {{myFilter.form.room}}
+                                {% render_field myFilter.form.room class="mr-2" %}
                             </td>
                             <td>
-                                {%render_field myFilter.form.date_in type="date" %}
+                                {%render_field myFilter.form.date_in type="date" style='max-width: 80px;' class="mr-2"%}
                             </td>
                             <td>
-                                {%render_field myFilter.form.date_out type="date" %}
+                                {%render_field myFilter.form.date_out type="date" style='max-width: 80px;' class="mr-2" %}
                             </td>
                             <td>
-                                {{myFilter.form.number}}
+                                {% render_field myFilter.form.number style='max-width: 80px;' class="mr-2" %}
                             </td>
                             <td>
                                 {{myFilter.form.status_res}}

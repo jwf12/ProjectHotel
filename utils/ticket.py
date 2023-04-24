@@ -1,11 +1,8 @@
-from django.shortcuts import render
 from django.http import HttpResponse
-from django.template.loader import render_to_string
 from hotel.models import Passanger, Reservation
 from weasyprint import HTML
 from datetime import datetime
 from django.template.loader import get_template 
-from weasyprint.text.fonts import FontConfiguration
 from django.shortcuts import get_object_or_404
 
 def export_pdf(request, pk):
@@ -35,5 +32,5 @@ def export_pdf(request, pk):
     html_string = html_template.render(context)
     pdf_file = HTML(string=html_string).write_pdf()
     response = HttpResponse(pdf_file, content_type='application/pdf')
-    response['Content-Disposition'] = f'filename="{passanger.passanger.name}.pdf"'
+    response['Content-Disposition'] = f'filename="{passanger.passanger.name} Reservation.pdf"'
     return response
