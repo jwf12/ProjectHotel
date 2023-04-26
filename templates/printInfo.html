@@ -13,20 +13,21 @@
     <h1>ProjectHotel</h1>
     
     <aside>
-      <address id="from">
-        **Hotel name**
-        **Hotel adress**
-        **City, province**
-        **Country**
+      <address>
+        <ul id="from">
+          <li>**Hotel name**</li>
+          <li>**Hotel adress**</li>
+          <li>**City, province**</li>
+          <li>**Country**</li>
+        </ul>
       </address>
 
       <address id="to">
       -Date: {{current_date|date:"d-m-Y"}}
-      -Res code: {{num_rva}}
-         
+      -Res code: {{num_rva}}         
       </address>
     </aside>
-
+    <p class="bor-ot">&nbsp;</p>
   </div>
   <ul class="list-group list-group-flush">
     <h2>Passanger information:</h2>
@@ -44,6 +45,7 @@
   </ul>
 
   <div class="footer">
+      <p class="bor-foot">&nbsp;</p>
       <p style="text-align: center;">By signing below, I acknowledge that I will be utilizing the hotel's facilities during my stay and that I will be responsible for any damages caused.</p>
       <p style="text-align: center;">&nbsp;</p>
       <p style="text-align: center;">__________________</p>
@@ -73,13 +75,10 @@
 
 
           ul{
-            margin-top: -30px;
-            padding-bottom: 40px;
-            border-bottom: solid #1ee494;s
+            list-style: none;
           }
           h2{
             color: #a9a;
-            tex
           }
           html {
             color: #14213d;
@@ -111,6 +110,7 @@
           aside address#from {
             color: #14213d;
             flex: 1;
+            
           }
           aside address#to {
             text-align: right;
@@ -167,13 +167,14 @@
           th:last-of-type, td:last-of-type {
             text-align: right;
           }
-          .footer {
-            background: #f6f6f6;
-            border-color: #f6f6f6;
-            border-style: solid;
-            border-width: 1cm 2cm;
-            margin-top: 45px;
+          .bor-foot {
+            border-top: 3px solid #1ee494;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
             position: absolute;
+          }
+          .bor-ot{
+            border-top: 3px solid #1ee494;
           }
     </style>
   </body>

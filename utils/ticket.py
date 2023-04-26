@@ -1,9 +1,10 @@
 from django.http import HttpResponse
-from hotel.models import Passanger, Reservation
-from weasyprint import HTML
-from datetime import datetime
 from django.template.loader import get_template 
 from django.shortcuts import get_object_or_404
+from xhtml2pdf import pisa
+from io import BytesIO
+from datetime import datetime
+from hotel.models import Passanger, Reservation
 
 def export_pdf(request, pk):
     passanger = get_object_or_404(Reservation, pk=pk)
@@ -30,7 +31,11 @@ def export_pdf(request, pk):
     html_template = get_template('printinfo.html')
     html_string = html_template.render({'person': passanger})
     html_string = html_template.render(context)
-    pdf_file = HTML(string=html_string).write_pdf()
+
+    pdf_file = BytesIO()
+    pisa.CreatePDF(html_string, dest=pdf_file)
+    pdf_file.seek(0)
     response = HttpResponse(pdf_file, content_type='application/pdf')
     response['Content-Disposition'] = f'filename="{passanger.passanger.name} Reservation.pdf"'
     return response
+
