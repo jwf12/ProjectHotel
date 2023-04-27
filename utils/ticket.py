@@ -28,7 +28,7 @@ def export_pdf(request, pk):
         # Otros
         'current_date': datetime.now(),
     }
-    html_template = get_template('/app/templates/printInfo.html')
+    html_template = get_template('/ProjectHotel/templates/printInfo.html')
     html_string = html_template.render({'person': passanger})
     html_string = html_template.render(context)
 
