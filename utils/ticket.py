@@ -28,7 +28,7 @@ def export_pdf(request, pk):
         # Otros
         'current_date': datetime.now(),
     }
-    html_template = get_template('printinfo.html')
+    html_template = get_template('/app/templates/printInfo.html')
     html_string = html_template.render({'person': passanger})
     html_string = html_template.render(context)
 
@@ -37,5 +37,6 @@ def export_pdf(request, pk):
     pdf_file.seek(0)
     response = HttpResponse(pdf_file, content_type='application/pdf')
     response['Content-Disposition'] = f'filename="{passanger.passanger.name} Reservation.pdf"'
+    print("FUNCIONAAAAA")
     return response
 

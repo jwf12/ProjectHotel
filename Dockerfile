@@ -15,10 +15,9 @@ ENV PYTHONUNBUFFERED 1
 
 RUN apk update \
 && apk add --no-cache gcc musl-dev postgresql-dev python3-dev libffi-dev \
-pango libffi \
-gtk+3.0 glib-dev \
-&& apk add py3-pip gcc musl-dev python3-dev pango zlib-dev jpeg-dev openjpeg-dev g++ libffi-dev \
 && apk add --no-cache freetype-dev \
+&& apk add --no-cache mariadb-connector-c-dev \
+&& apk add --no-cache build-base \
 && pip install --upgrade pip 
 
 # copy whole project to your docker home directory. 
