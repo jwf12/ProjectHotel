@@ -114,7 +114,7 @@ import dj_database_url
 
 DATABASES = {
 
-    'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
+    'default': dj_database_url.parse(env('DATABASE_URL'))
 
 }
 
