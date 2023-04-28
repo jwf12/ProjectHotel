@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: your_db_username
+      POSTGRES_PASSWORD: your_db_password
+      POSTGRES_DB: your_db_name
+  
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    environment:
+      - DATABASE_URL=postgres://projecthotel_user:OD5g3mjyOXYJZAI1Adlbk3JmSLCFk7Sz@dpg-ch24l63h4hsum44v7hhg-a.singapore-postgres.render.com/projecthotel
+    depends_on:
+      - db
