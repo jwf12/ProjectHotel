@@ -8,8 +8,9 @@
 <div class="row m-4 ">
     <div class="col d-flex justify-content-center flex-wrap">
         
+        
         {% for room in rooms %}
-        <div class="card m-3" style=" min-height: 280px;background-color:{{room.status}}; min-width: 200px; max-width: 260px;">
+        <div class="card m-3" style=" min-height: 280px; background-color:{{room.status}}; min-width: 200px; max-width: 260px;">
             <div class="card-body">
                 <!-- Upper Room Card --> 
                 <div class="card-top d-flex border-bottom">
@@ -57,8 +58,19 @@
                                 <div class="m-2">
                                     <a href="{% url 'hotel:export_pdf' pk=reservation.id %}" target="_blank">Open PDF</a>
                                 </div>
-                               
 
+                              <!-- Reservation TILL -->  
+                              <div class="mt-2">
+                                {% for till in tills %}
+                                    {% if till.till_res.number == reservation.number%}
+                                    <a href="{% url 'caja:till' pk=till.till_res.id %}" class="btn btn-warning" target="_blank">
+                                        Till
+                                    </a>
+                                    {% endif %}
+                                                           
+                               {% endfor %}
+                              </div>
+                               
                             </div>
                             
                         {% endif %}         
@@ -92,9 +104,9 @@
                 <label for="room">Room:</label>
                     <select class="form-control" id="room" name="room">
                         {% for room in rooms %}
-                            {% if room.status == '#9bf0ac' and room.state == 1  %}
-                                <option value="{{ room.id }}">
-                                    Room:  {{ room.name }} - Type: {{room.get_type_room_display}}
+                            {% if room.status == '#9bf0ac'  %}
+                                <option value="{{ room.id }}" {% if room.name == reservation.room.name %}selected{% endif %} {% if room.state == 1 %}data-available{% endif %}>
+                                    Room:  {{ room.name }} - Type: {{room.get_type_room_display }} || {{room.get_state_display}}
                                 </option>
                             {% endif %}    
                         {% endfor %}
@@ -103,7 +115,7 @@
         
                 <div class="form-group m-3">
                     <label for="date_in">Date in:</label>
-                    <input type="date" class="form-control" id="date_in" name="date_in" value={{reservation.date_in|date:'Y-m-d'}} >
+                    <input type="date" class="form-control" id="date_in" name="date_in" value={{reservation.date_in|date:'Y-m-d'}} readonly >
                 </div>
                 <div class="form-group m-3">
                     <label for="date_out">Date out:</label>

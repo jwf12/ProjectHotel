@@ -80,6 +80,7 @@
                     <th>Date out:</th>
                     <th>Status res:</th>
                     <th>Pdf:</th>
+                    <th>Till:</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -115,6 +116,15 @@
                                     <div class="m-2">
                                         <a href="{% url 'hotel:export_pdf' pk=reservation.id %}" target="_blank">Open PDF</a>
                                     </div>
+                                </td>
+                                <td>
+                                    {% for till in tills %}
+                                        {% if till.till_res.number == reservation.number%}
+                                            <a href="{% url 'caja:till' pk=reservation.id %}" class="btn btn-warning" target="_blank">
+                                                Till
+                                            </a>
+                                        {% endif %}                                                           
+                                    {% endfor %}
                                 </td>
                             </tr>
                         {% endfor %}

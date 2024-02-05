@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.dispatch import receiver
 from shortuuid.django_fields import ShortUUIDField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 class Passanger(models.Model):
     name = models.CharField(max_length=205)
@@ -69,3 +73,9 @@ class Reservation(models.Model):
     status_res = models.IntegerField(choices=STATUS_RESERVATION, default = 'not-reserved')
     observations = models.TextField()
 
+@receiver(post_save, sender=Reservation)
+def create_till_for_reservation(sender, instance, created, **kwargs):
+    from caja.models import Till
+    if created:
+        # Si la Reservation acaba de ser creada, creamos un Till asociado
+        Till.objects.create(till_res=instance)

@@ -11,6 +11,7 @@ from utils.utils import room_change_satate
 from django.shortcuts import get_object_or_404
 from datetime import date
 from .forms import ReservationForm
+from caja.models import Till
 
 
 class Base(generic.ListView):
@@ -35,6 +36,8 @@ class Home(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['reservations'] = Reservation.objects.filter(status_res=2) 
+        #Se pasa el contexto para generar el boton de till en cada reserva
+        context['tills'] = Till.objects.all() 
         room_change_satate()   
         return context
 
@@ -126,7 +129,7 @@ class UpdateReservationViewSearch(generic.UpdateView):
             'amount_people',
             'observations',
     ]
-
+    
     def form_valid(self, form):
         response = super().form_valid(form)
         messages.success(self.request, 'Reservation edited')

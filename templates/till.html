@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<!--Room tables-->
+<div class="row m-4">
+    <div class="col-12 d-flex flex-column justify-content-center text-center">
+
+        <div class="text-center mt-4 border">
+            <div class="col-12 d-flex justify-content-center">
+                <div class="mr-2">
+                    <h4>Reservation: {{till.till_res.number}}</h4> 
+                </div>
+                <div class="mx-2">
+                    <h4>||</h4>
+                </div>
+                <div class="ml-2">
+                    <h4>Room number: {{till.till_res.room}}</h4>
+                </div>              
+            </div>
+             
+            <div>
+                <h5>Status: {{till.till_res.get_status_res_display}}</h5>
+            </div>
+            <div class="m-1 border-top border-bottom">
+                <h5 class="">Observtions:</h5>
+                <p>{{till.till_res.observations}}</p>
+            </div>
+        </div>
+        {% if items.item_till.till_res.status_res == 2 %}
+
+        {% endif %}
+        <div class="d-flex justify-content-center">
+            <form action="" method='POST'>
+                {% csrf_token %}
+                <button type='button' class='btn btn-primary my-4 mx-4' data-bs-toggle="modal" data-bs-target="#createItems">Create Item</button>
+            </form>
+
+            <form action="" method='POST'>
+                {% csrf_token %}
+                <button type='button' class='btn btn-danger my-4 mx-4 ' data-bs-toggle="modal" data-bs-target="#payment_create">Payment</button>
+            </form>
+        </div>
+        
+        <div class="col-8 mx-auto mt-2 border">
+            
+            <table class="table">               
+                <h4 class="p-2 m-1 border-bottom">Charges</h4>
+                <p>Total Amount: ${{ total_amount_items|default:"0" }}</p>
+                <thead class="border-top">
+                    <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Observations</th>
+                        <th>Date created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.price }}</td>
+                                <td>{{ item.observation }}</td>
+                                <td>{{item.date}}</td>
+                                <td class="text-center align-middle">
+                                    <form action="{% url 'caja:delete-item' item.id %}" method='POST' id='delete_form_{{item.id}}'>
+                                        {% csrf_token %}
+                                        <button type='button' class='btn btn-danger btn-sm mx-2 mb-2' data-bs-toggle="modal" data-bs-target="#confirmModal_{{item.id}}">X</button>
+                                    </form>
+                                </td>
+                            </tr>
+                    {% endfor %}
+                </tbody>
+                
+            </table>
+
+
+            <table class="table">
+                <thead class="border-top">
+                    <h3 class="border-bottom p-2 m-1">Payments</h3>
+                    <p>Total Amount: ${{ total_amount_pays|default:"0" }}</p>
+                    <tr>
+                        <th>Method</th>
+                        <th>Amount</th>
+                        <th>Observations</th>
+                        <th>Date created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                            <tr>
+                                <td>{{ payment.pay_method }}</td>
+                                <td>{{ payment.amount }}</td>
+                                <td>{{ payment.observation }}</td>
+                                <td>{{payment.date}}</td>
+                                <td class="text-center align-middle">
+                                    <form action="{% url 'caja:delete-payment' payment.id %}" method='POST' id='delete_form_{{payment.id}}'>
+                                        {% csrf_token %}
+                                        <button type='button' class='btn btn-danger btn-sm mx-2 mb-2' data-bs-toggle="modal" data-bs-target="#confirmModal_payment{{payment.id}}">X</button>
+                                    </form>
+                                </td>
+                            </tr>
+                    {% endfor %}
+                </tbody>   
+                         
+            </table>
+        </div>
+            <h5 class="font-weight-bold" style="text-decoration: underline;">Total: $ {{total_total}}</h5>
+    </div>
+</div>
+
+
+
+<!-- Modal: create item-->
+
+<div class="modal fade" id="createItems" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="bi bi-journal-bookmark"></i> Edit:</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+    
+        <form action="{% url 'caja:item_create'%}" method = 'POST'>
+            {% csrf_token %}
+            <div class="modal-body">
+
+                <div class="form-group m-3">
+                    <label for="item_till">Number:</label>
+                    <input type="text" class="form-control" id="item_till" name="item_till" value="{{till.till_res.id}}" readonly>
+                </div>
+                <div class="form-group m-3">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name">
+                </div>
+                <div class="form-group m-3">
+                    <label for="price">Price:</label>
+                    <input type="text" class="form-control" id="price" name="price" >
+                </div>
+                <div class="form-group m-3">
+                    <label for="observation">Observation:</label>
+                    <input type="text" class="form-control" id="observation" name="observation" >
+                </div>
+            </div>
+
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+
+        </form>
+
+        
+      </div>
+    </div>
+</div>
+
+
+<!-- Modal: create payment-->
+
+<div class="modal fade" id="payment_create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="bi bi-journal-bookmark"></i> Edit:</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+    
+        <form action="{% url 'caja:payment_create'%}" method = 'POST'>
+            {% csrf_token %}
+            <div class="modal-body">
+
+                <div class="form-group m-3">
+                    <label for="payment_till">Number:</label>
+                    <input type="text" class="form-control" id="payment_till" name="payment_till" value="{{till.till_res.id}}" readonly>
+                </div>
+                <div class="form-group m-3">
+                    <label for="pay_method">Method:</label>
+                    <input type="text" class="form-control" id="pay_method" name="pay_method">
+                </div>
+                <div class="form-group m-3">
+                    <label for="amount">Amount:</label>
+                    <input type="text" class="form-control" id="amount" name="amount" >
+                </div>
+                <div class="form-group m-3">
+                    <label for="observation">Observation:</label>
+                    <input type="text" class="form-control" id="observation" name="observation" >
+                </div>
+            </div>
+
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+
+        </form>
+
+        
+      </div>
+    </div>
+</div>
+
+
+<!-- Modal: Item Eliminar-->
+
+{% for item in items %}
+<div class="modal fade" id="confirmModal_{{item.id}}" tabindex="-1" aria-labelledby="confirmModalLabel_{{item.id}}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel_{{item.id}}">Confirmar eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea eliminar este item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="document.getElementById('delete_form_{{item.id}}').submit();">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+<!-- Modal: Payment Eliminar-->
+
+{% for payment in payments %}
+<div class="modal fade" id="confirmModal_payment{{payment.id}}" tabindex="-1" aria-labelledby="confirmModalLabel_{{payment.id}}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel_{{payment.id}}">Confirmar eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea eliminar esta payment?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="document.getElementById('delete_form_{{payment.id}}').submit();">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}

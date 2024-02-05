@@ -22,11 +22,6 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-import environ
-
-env = environ.Env()
-
-environ.Env.read_env()
 
 
 
@@ -55,6 +50,7 @@ INSTALLED_APPS = [
 
     # apps
     'hotel',
+    'caja',
     'widget_tweaks',
     'django_filters',
 
@@ -110,15 +106,12 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # }
 
 # Render.com database
-import dj_database_url
-
 DATABASES = {
-
-    'default': dj_database_url.parse(env('DATABASE_URL'))
-
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
